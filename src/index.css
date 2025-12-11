@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -----------------------------------------
+   1) السماح للويدجت بالعمل فوق كل العناصر
+------------------------------------------*/
+
+  
+
+/* بعض الويدجتات تضع container */
+.chat-widget-container,
+#chat-widget-container {
+    position: fixed !important;
+    pointer-events: auto !important;
+    z-index: 999999 !important;
+}
+
+/* -----------------------------------------
+   2) ضمان أن React يبقى طبيعي بدون تعطيل
+------------------------------------------*/
+
+#root {
+    pointer-events: auto !important; 
+    position: relative;
+    z-index: 1;
+}
+
+#root * {
+    pointer-events: auto !important;
+}
+
+/* -----------------------------------------
+   3) منع أي عنصر من تغطية الويدجت
+------------------------------------------*/
+
+* {
+    z-index: auto;
+}
+
+.chat-widget-button,
+#chat-widget-panel,
+#chat-widget-call-overlay {
+    z-index: 999999 !important;
+}
+
+/* -----------------------------------------
+ ------------------------------------------*/
+
+iframe.chat-widget-iframe {
+    pointer-events: auto !important;
+    z-index: 999999 !important;
+}
