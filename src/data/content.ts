@@ -24,20 +24,29 @@ export const content = {
         'اضغط لبدء جولة افتراضية شاملة تمكنك من التجول في جميع أركان الفلة واستكشاف المساحات والتفاصيل بدقة عالية'
     },
 
-     
     gallery: {
       title: 'معرض المشروع',
       subtitle: 'استعرض التصاميم الفاخرة والتفاصيل المعمارية لمشروع سي بوينت'
     },
 
-    /* ⭐ سكشن الفيديو الجديد ⭐ */
+    /* ⭐ سكشن الفيديو الأساسي ⭐ */
     videoSection: {
-    video: "video.mp4",
-    title: "mkn_ksa",
-    text: "كن أقرب ما يكون إلى البحر… في قلب حي ثروة حيث تلتقي الحياة الهادئة بالفخامة الراقية. شقتك الفاخرة بانتظارك لتمنحك أسلوب حياة جديد، يوازن بين الراحة، الخصوصية، والإطلالات الساحرة. اكتشف تجربة سكنية استثنائية… وكل ذلك على بُعد خطوات فقط من البحر.",
-    button: "سجّل اهتمامك الآن"
-}
-,
+      video: "video.mp4",
+      title: "mkn_ksa",
+      text: "كن أقرب ما يكون إلى البحر… في قلب حي ثروة حيث تلتقي الحياة الهادئة بالفخامة الراقية. شقتك الفاخرة بانتظارك لتمنحك أسلوب حياة جديد، يوازن بين الراحة، الخصوصية، والإطلالات الساحرة. اكتشف تجربة سكنية استثنائية… وكل ذلك على بُعد خطوات فقط من البحر.",
+      button: "سجّل اهتمامك الآن"
+    },
+
+    /* ⭐ سكشن Smart Home System الجديد ⭐ */
+    /* ⭐ سكشن Smart Home System ⭐ */
+smartHomeSection: {
+  title: "نظام المنزل الذكي",
+  description: "تحويل المنازل في جميع أنحاء الإمارات العربية المتحدة باستخدام أحدث حلول الأتمتة المنزلية الذكية. عش تجربة المستقبل مع Zuccess.",
+  videos: [
+    { src: "zuccesshome.mp4", alt: "Zuccess Home Video 1" },
+    { src: "zuccesshomesystem.mp4", alt: "Zuccess Home Video 2" }
+  ]
+},
 
     features: {
       title: 'مميزات سي بوينت',
@@ -52,18 +61,15 @@ export const content = {
     },
 
     about: {
-  title: 'من نحن',
-  paragraphs: [
-    'شركة مكن للتطوير العقاري هي إحدى الشركات الرائدة في قطاع التطوير العقاري بالمملكة العربية السعودية، وتتميز بتقديم مشاريع سكنية مبتكرة تجمع بين الجودة العالية والتصميم العصري الذي يلبي تطلعات العائلات السعودية. ويأتي مشروع سي بوينت كأحد أبرز مشاريعنا التي تعكس رؤيتنا في الارتقاء بمعايير السكن الحديث.',
-    
-    'منذ تأسيس شركة مكن، نعمل على بناء مجتمعات سكنية متكاملة توفر بيئة حياة مثالية من خلال حلول معمارية مبتكرة وخدمات استثنائية. نؤمن بأن التطوير العقاري هو صناعة مستقبل، لذلك نحرص على تطبيق أفضل الممارسات العالمية مع الحفاظ على الطابع المحلي وروح المكان.',
-    
-    'يضم فريق مكن نخبة من الخبراء والمتخصصين الذين يعملون بشغف وإتقان لتجسيد رؤيتنا وتحقيق التميز في كل مشروع. ومع مشروع سي بوينت، نسعى لتقديم تجربة سكنية راقية تجمع بين الراحة والفخامة والابتكار، وترتقي بتوقعات عملائنا نحو الأفضل.'
-  ],
-  experience: 'أكثر من 20 عاماً من الخبرة',
-  experienceDesc: 'في تطوير المشاريع السكنية الراقية'
-},
-
+      title: 'من نحن',
+      paragraphs: [
+        'شركة مكن للتطوير العقاري هي إحدى الشركات الرائدة في قطاع التطوير العقاري بالمملكة العربية السعودية، وتتميز بتقديم مشاريع سكنية مبتكرة تجمع بين الجودة العالية والتصميم العصري الذي يلبي تطلعات العائلات السعودية. ويأتي مشروع سي بوينت كأحد أبرز مشاريعنا التي تعكس رؤيتنا في الارتقاء بمعايير السكن الحديث.',
+        'منذ تأسيس شركة مكن، نعمل على بناء مجتمعات سكنية متكاملة توفر بيئة حياة مثالية من خلال حلول معمارية مبتكرة وخدمات استثنائية. نؤمن بأن التطوير العقاري هو صناعة مستقبل، لذلك نحرص على تطبيق أفضل الممارسات العالمية مع الحفاظ على الطابع المحلي وروح المكان.',
+        'يضم فريق مكن نخبة من الخبراء والمتخصصين الذين يعملون بشغف وإتقان لتجسيد رؤيتنا وتحقيق التميز في كل مشروع. ومع مشروع سي بوينت، نسعى لتقديم تجربة سكنية راقية تجمع بين الراحة والفخامة والابتكار، وترتقي بتوقعات عملائنا نحو الأفضل.'
+      ],
+      experience: 'أكثر من 20 عاماً من الخبرة',
+      experienceDesc: 'في تطوير المشاريع السكنية الراقية'
+    },
 
     cta: {
       title: 'جاهز لزيارة سي بوينت؟',
@@ -90,10 +96,6 @@ export const content = {
     }
   },
 
-  /* ================================
-     ENGLISH VERSION
-     ================================ */
-
   en: {
     hero: {
       title: 'Sea Point — A New Concept for Modern Living',
@@ -118,19 +120,28 @@ export const content = {
       description: 'Click to start a comprehensive virtual tour that allows you to walk through all corners of the villa and explore the spaces and details with high accuracy'
     },
 
-     
-
     gallery: {
       title: 'Project Gallery',
       subtitle: 'Browse the luxurious designs and architectural details of Sea Point project'
     },
 
     /* ⭐ Video Section ⭐ */
-   videoSection: {
-    video: "video.mp4",
-    title: "mkn_ksa",
-    text: "Live just steps away from the sea in Tharwa District—where luxury meets tranquility. Your new premium apartment awaits, offering a lifestyle that blends privacy, comfort, and breathtaking coastal views. Discover an elevated living experience designed for those who seek more than just a home.",
-    button: "Register Your Interest"
+    videoSection: {
+      video: "video.mp4",
+      title: "mkn_ksa",
+      text: "Live just steps away from the sea in Tharwa District—where luxury meets tranquility. Your new premium apartment awaits, offering a lifestyle that blends privacy, comfort, and breathtaking coastal views. Discover an elevated living experience designed for those who seek more than just a home.",
+      button: "Register Your Interest"
+    },
+
+    /* ⭐ Smart Home System Section ⭐ */
+   /* ⭐ Smart Home System Section ⭐ */
+smartHomeSection: {
+  title: "Smart Home System",
+  description: "Transforming homes across the UAE with cutting-edge smart home automation solutions. Experience the future of living with Zuccess.",
+  videos: [
+    { src: "zuccesshome.mp4", alt: "Zuccess Home Video 1" },
+    { src: "zuccesshomesystem.mp4", alt: "Zuccess Home Video 2" }
+  ]
 }
 ,
 
@@ -147,18 +158,15 @@ export const content = {
     },
 
     about: {
-  title: "About Us",
-  paragraphs: [
-    "MKN Real Estate Development is one of the leading companies in the Saudi real estate sector, distinguished by delivering innovative residential projects that combine high quality with contemporary design that meets the aspirations of modern Saudi families. Sea Point stands as one of our flagship projects, reflecting our vision to elevate the standards of modern living.",
-    
-    "Since the establishment of MKN, we have been committed to building integrated residential communities that provide an ideal living environment through innovative architectural solutions and exceptional services. We believe that real estate development is the creation of a future, which is why we apply global best practices while preserving the local identity and spirit of place.",
-    
-    "Our team at MKN consists of highly skilled experts who work with passion and precision to bring our vision to life and deliver excellence in every project. With Sea Point, we aim to offer a refined residential experience that blends comfort, luxury, and innovation—setting a new benchmark for upscale living."
-  ],
-  experience: "Over 20 Years of Experience",
-  experienceDesc: "In developing upscale residential projects"
-},
-
+      title: "About Us",
+      paragraphs: [
+        "MKN Real Estate Development is one of the leading companies in the Saudi real estate sector, distinguished by delivering innovative residential projects that combine high quality with contemporary design that meets the aspirations of modern Saudi families. Sea Point stands as one of our flagship projects, reflecting our vision to elevate the standards of modern living.",
+        "Since the establishment of MKN, we have been committed to building integrated residential communities that provide an ideal living environment through innovative architectural solutions and exceptional services. We believe that real estate development is the creation of a future, which is why we apply global best practices while preserving the local identity and spirit of place.",
+        "Our team at MKN consists of highly skilled experts who work with passion and precision to bring our vision to life and deliver excellence in every project. With Sea Point, we aim to offer a refined residential experience that blends comfort, luxury, and innovation—setting a new benchmark for upscale living."
+      ],
+      experience: "Over 20 Years of Experience",
+      experienceDesc: "In developing upscale residential projects"
+    },
 
     cta: {
       title: 'Ready to Visit Sea Point?',
