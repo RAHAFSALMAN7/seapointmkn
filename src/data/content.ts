@@ -132,15 +132,13 @@ smartHomeSection: {
       text: "Live just steps away from the sea in Tharwa District—where luxury meets tranquility. Your new premium apartment awaits, offering a lifestyle that blends privacy, comfort, and breathtaking coastal views. Discover an elevated living experience designed for those who seek more than just a home.",
       button: "Register Your Interest"
     },
-
-    /* ⭐ Smart Home System Section ⭐ */
-   /* ⭐ Smart Home System Section ⭐ */
+ 
 smartHomeSection: {
   title: "Smart Home System",
   description: "Transforming homes across the UAE with cutting-edge smart home automation solutions. Experience the future of living with Zuccess.",
   videos: [
-    { src: "zuccesshome.mp4", alt: "Zuccess Home Video 1" },
-    { src: "zuccesshomesystem.mp4", alt: "Zuccess Home Video 2" }
+    { src: "zuccesshome.mp4" },
+    { src: "zuccesshomesystem.mp4" }
   ]
 }
 ,
