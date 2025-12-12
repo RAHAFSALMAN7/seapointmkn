@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useMemo } from "react";
 
 interface Video {
     src: string;
@@ -22,29 +22,31 @@ interface VideoSectionProps {
 }
 
 export default function VideoSection({ t }: VideoSectionProps) {
-    // Reference للفيديو الرئيسي
     const mainVideoRef = useRef<HTMLVideoElement>(null);
 
-    // References لكل فيديو في الكروسيل
-    const videoRefs: React.RefObject<HTMLVideoElement>[] =
-        t.smartHomeSection?.videos?.map(() => useRef<HTMLVideoElement>(null)) || [];
+    // Carousel videos
+    const carouselVideos = t.smartHomeSection?.videos || [];
 
-    // حالة كتم الصوت
-    const [mainMuted, setMainMuted] = useState<boolean>(true);
-    const [carouselMuted, setCarouselMuted] = useState<boolean[]>(
-        t.smartHomeSection?.videos?.map(() => true) || []
+    // إنشاء المراجع مرة واحدة باستخدام useMemo
+    const videoRefs = useMemo(
+        () => carouselVideos.map(() => useRef<HTMLVideoElement>(null)),
+        [carouselVideos.length]
     );
 
-    // Carousel state
+    const [mainMuted, setMainMuted] = useState<boolean>(true);
+    const [carouselMuted, setCarouselMuted] = useState<boolean[]>(
+        carouselVideos.map(() => true)
+    );
+
     const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-    // الدوال لتغيير الفيديو الحالي
     const next = () =>
-        setCurrentIndex((prev: number) => (prev + 1) % videoRefs.length);
+        setCurrentIndex((prev: number) => (prev + 1) % carouselVideos.length);
     const prev = () =>
-        setCurrentIndex((prev: number) => (prev - 1 + videoRefs.length) % videoRefs.length);
+        setCurrentIndex(
+            (prev: number) => (prev - 1 + carouselVideos.length) % carouselVideos.length
+        );
 
-    // كتم/تشغيل الصوت للفيديو الرئيسي
     const toggleMainSound = () => {
         if (mainVideoRef.current) {
             mainVideoRef.current.muted = !mainVideoRef.current.muted;
@@ -52,18 +54,20 @@ export default function VideoSection({ t }: VideoSectionProps) {
         }
     };
 
-    // كتم/تشغيل الصوت للفيديو الحالي في الكروسيل
     const toggleCarouselSound = (index: number) => {
         const vid = videoRefs[index].current;
         if (vid) {
             vid.muted = !vid.muted;
-            setCarouselMuted((prev: boolean[]) =>
-                prev.map((m: boolean, i: number) => (i === index ? vid.muted : m))
+            setCarouselMuted((prev) =>
+                prev.map((m, i) => (i === index ? vid.muted : m))
             );
         }
     };
 
-    const carouselVideos = t.smartHomeSection?.videos || [];
+    // حماية من الفشل إذا لم توجد فيديوهات
+    if (!t || !t.videoSection || !t.smartHomeSection || carouselVideos.length === 0) {
+        return null;
+    }
 
     return (
         <>
@@ -74,7 +78,6 @@ export default function VideoSection({ t }: VideoSectionProps) {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid md:grid-cols-2 gap-16 items-center">
 
-                        {/* 🎥 الفيديو الأساسي */}
                         <div className="relative group">
                             <div className="absolute -inset-4 bg-gradient-to-br from-[#D9C18E]/30 to-transparent rounded-3xl blur opacity-40 group-hover:opacity-60 transition duration-500" />
 
@@ -88,7 +91,6 @@ export default function VideoSection({ t }: VideoSectionProps) {
                                 className="w-full h-[520px] md:h-[600px] object-cover rounded-3xl shadow-2xl relative z-10"
                             />
 
-                            {/* زر الصوت للفيديو الرئيسي */}
                             <button
                                 onClick={toggleMainSound}
                                 className="absolute bottom-6 left-6 bg-black/50 text-white px-4 py-2 rounded-xl hover:bg-black/70 transition"
@@ -97,7 +99,6 @@ export default function VideoSection({ t }: VideoSectionProps) {
                             </button>
                         </div>
 
-                        {/* النص */}
                         <div className="space-y-6 animate-fade-in-right">
                             <h3 className="text-xl font-bold text-[#003B4A]">Sea Point</h3>
                             <p className="text-gray-600 text-2xl leading-relaxed">
@@ -120,12 +121,10 @@ export default function VideoSection({ t }: VideoSectionProps) {
                     <h2 className="text-4xl font-bold text-[#003B4A] mb-4">
                         {t.smartHomeSection.title}
                     </h2>
-
                     <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-12">
                         {t.smartHomeSection.description}
                     </p>
 
-                    {/* 🎥 كروسل الفيديو */}
                     <div className="relative w-full h-[500px] mx-auto overflow-hidden rounded-3xl shadow-xl">
                         {carouselVideos[currentIndex] && (
                             <>
@@ -139,7 +138,6 @@ export default function VideoSection({ t }: VideoSectionProps) {
                                     className="w-full h-full object-cover transition-all duration-700"
                                 />
 
-                                {/* زر الصوت للفيديو الحالي */}
                                 <button
                                     onClick={() => toggleCarouselSound(currentIndex)}
                                     className="absolute bottom-6 left-6 bg-black/50 text-white px-4 py-2 rounded-xl hover:bg-black/70 transition"
@@ -149,7 +147,6 @@ export default function VideoSection({ t }: VideoSectionProps) {
                             </>
                         )}
 
-                        {/* سهم يسار */}
                         <button
                             onClick={prev}
                             className="absolute top-1/2 left-4 -translate-y-1/2 bg-black/40 text-white p-3 rounded-full hover:bg-black/60 transition"
@@ -157,14 +154,12 @@ export default function VideoSection({ t }: VideoSectionProps) {
                             ‹
                         </button>
 
-                        {/* سهم يمين */}
                         <button
                             onClick={next}
                             className="absolute top-1/2 right-4 -translate-y-1/2 bg-black/40 text-white p-3 rounded-full hover:bg-black/60 transition"
                         >
                             ›
                         </button>
-
                     </div>
                 </div>
             </section>
