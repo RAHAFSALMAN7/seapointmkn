@@ -7,119 +7,143 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 interface GalleryProps {
-  t: any;
-  galleryImages: string[];
+    t: any;
+    galleryImages: string[];
 }
 
 export default function Gallery({ t, galleryImages }: GalleryProps) {
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxImage, setLightboxImage] = useState("");
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [lightboxImage, setLightboxImage] = useState("");
 
-  const openLightbox = (img: string) => {
-    setLightboxImage(img);
-    setLightboxOpen(true);
-  };
+    return (
+        <section className="py-32 bg-gradient-to-br from-[#003B4A] to-[#004B5A] overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4">
 
-  const closeLightbox = () => setLightboxOpen(false);
-
-  return (
-    <section className="py-32 bg-gradient-to-br from-[#003B4A] to-[#004B5A] relative overflow-hidden">
-      {/* خلفية زخرفية */}
-      <div className="absolute inset-0 opacity-5">
-        <div
-          className="absolute top-0 left-0 w-full h-full"
-          style={{
-            backgroundImage: `repeating-linear-gradient(
-              0deg,
-              #D9C18E 0,
-              #D9C18E 1px,
-              transparent 0,
-              transparent 100px
-            )`,
-          }}
-        />
-      </div>
-
-      {/* العنوان */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            {t.gallery.title}
-          </h2>
-
-          <p className="text-xl text-white/80 max-w-2xl mx-auto">
-            {t.gallery.subtitle}
-          </p>
-
-          <div className="w-32 h-1 bg-[#D9C18E] mx-auto mt-8" />
-        </div>
-
-        {/* سلايدر Swiper */}
-        <Swiper
-          modules={[Pagination, Navigation]}
-          spaceBetween={30}
-          slidesPerView={1}
-          pagination={{ clickable: true }}
-          navigation={true}
-          loop={true}
-          breakpoints={{
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-          className="!pb-16"
-        >
-          {galleryImages.map((image, index) => (
-            <SwiperSlide key={index}>
-              <div
-                className="group relative cursor-pointer"
-                onClick={() => openLightbox(image)}
-              >
-                {/* تأثير ذهبي */}
-                <div className="absolute -inset-2 bg-gradient-to-br from-[#D9C18E] to-[#c4a76d] rounded-2xl opacity-0 group-hover:opacity-100 blur transition duration-500" />
-
-                {/* الصورة */}
-                <div className="relative overflow-hidden rounded-2xl shadow-2xl">
-                  <img
-                    src={image}
-                    alt={`Gallery ${index + 1}`}
-                    className="w-full h-80 md:h-96 object-cover transform group-hover:scale-105 transition duration-700"
-                  />
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#003B4A]/80 to-transparent opacity-0 group-hover:opacity-100 transition duration-500" />
+                {/* Title */}
+                <div className="text-center mb-20">
+                    <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
+                        {t.gallery.title}
+                    </h2>
+                    <p className="text-xl text-white/80 max-w-2xl mx-auto">
+                        {t.gallery.subtitle}
+                    </p>
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
 
-        {/* Lightbox */}
-        {lightboxOpen && (
-          <div
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[999999] flex items-center justify-center p-6"
-            onClick={closeLightbox}
-          >
-            <img
-              src={lightboxImage}
-              alt="Preview"
-              className="max-w-4xl max-h-[90vh] rounded-2xl shadow-2xl border-4 border-white object-contain animate-[fadeIn_0.3s_ease]"
-            />
-          </div>
-        )}
-      </div>
+                <Swiper
+                    modules={[Pagination, Navigation]}
+                    centeredSlides
+                    slidesPerView={3}
+                    spaceBetween={60}
+                    loop
+                    navigation
+                    pagination={{ clickable: true }}
+                    className="gallery-swiper"
+                >
+                    {galleryImages.map((image, index) => (
+                        <SwiperSlide key={index}>
+                            <div className="gallery-slide">
+                                <img
+                                    src={image}
+                                    alt={`Gallery ${index + 1}`}
+                                    onClick={() => {
+                                        setLightboxImage(image);
+                                        setLightboxOpen(true);
+                                    }}
+                                />
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
 
-      {/* أنيميشن Lightbox */}
-      <style>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: scale(0.95);
+                {/* Lightbox */}
+                {lightboxOpen && (
+                    <div
+                        className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center"
+                        onClick={() => setLightboxOpen(false)}
+                    >
+                        <img
+                            src={lightboxImage}
+                            className="max-w-5xl max-h-[90vh] rounded-2xl shadow-2xl"
+                        />
+                    </div>
+                )}
+            </div>
+
+            {/* ===== CSS ===== */}
+            <style>{`
+        /* 🔑 الحل هنا */
+        .gallery-swiper {
+          padding-top: 60px;
+          padding-bottom: 80px;
+
+          /* لون الأسهم الحقيقي */
+          --swiper-navigation-color: #CBB279;
+          --swiper-pagination-color: #CBB279;
+        }
+
+        .gallery-slide {
+          transition: all 0.5s ease;
+          transform: scale(0.8);
+          opacity: 0.4;
+        }
+
+        .gallery-slide img {
+          width: 100%;
+          height: 420px;
+          object-fit: cover;
+          border-radius: 24px;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+          transition: all 0.5s ease;
+          cursor: pointer;
+        }
+
+        /* ⭐ الصورة اللي بالنص */
+        .swiper-slide-active .gallery-slide {
+          transform: scale(1.1) translateY(-20px);
+          opacity: 1;
+          z-index: 10;
+        }
+
+        .swiper-slide-active img {
+          box-shadow: 0 30px 80px rgba(203,178,121,0.55);
+        }
+
+        /* ===== الأسهم ===== */
+        .swiper-button-next,
+        .swiper-button-prev {
+          width: 30px;
+          height: 30px;
+          opacity: 0.7;
+          transition: transform 0.25s ease, opacity 0.25s ease;
+        }
+
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+          transform: scale(1.15);
+          opacity: 1;
+        }
+
+        /* ===== Pagination dots ===== */
+        .swiper-pagination-bullet {
+          background: #ffffff80;
+          opacity: 1;
+        }
+
+        .swiper-pagination-bullet-active {
+          background: #CBB279;
+        }
+
+        /* موبايل */
+        @media (max-width: 768px) {
+          .gallery-slide img {
+            height: 320px;
           }
-          to {
-            opacity: 1;
-            transform: scale(1);
+
+          .swiper-slide-active .gallery-slide {
+            transform: scale(1.05) translateY(-10px);
           }
         }
       `}</style>
-    </section>
-  );
+        </section>
+    );
 }

@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 
 interface Video {
   src: string;
@@ -26,45 +27,71 @@ export default function VideoSection({ t }: VideoSectionProps) {
   const mainVideoRef = useRef<HTMLVideoElement>(null);
   const carouselVideoRef = useRef<HTMLVideoElement>(null);
 
+  /* ===== Main Video ===== */
+  const [mainPlaying, setMainPlaying] = useState(true);
   const [mainMuted, setMainMuted] = useState(true);
+  const [mainProgress, setMainProgress] = useState(0);
+  const [mainDuration, setMainDuration] = useState(0);
+
+  /* ===== Carousel Video ===== */
+  const [carouselPlaying, setCarouselPlaying] = useState(true);
   const [carouselMuted, setCarouselMuted] = useState(true);
+  const [carouselProgress, setCarouselProgress] = useState(0);
+  const [carouselDuration, setCarouselDuration] = useState(0);
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  /* ===== الفيديو الرئيسي ===== */
-  const toggleMainSound = () => {
-    if (mainVideoRef.current) {
-      mainVideoRef.current.muted = !mainVideoRef.current.muted;
-      setMainMuted(mainVideoRef.current.muted);
-    }
+  /* ===== Helpers ===== */
+  const togglePlay = (
+    ref: React.RefObject<HTMLVideoElement>,
+    playing: boolean,
+    setPlaying: (v: boolean) => void
+  ) => {
+    if (!ref.current) return;
+    playing ? ref.current.pause() : ref.current.play();
+    setPlaying(!playing);
   };
 
-  /* ===== كروسيل الفيديو ===== */
-  const toggleCarouselSound = () => {
-    if (carouselVideoRef.current) {
-      carouselVideoRef.current.muted =
-        !carouselVideoRef.current.muted;
-      setCarouselMuted(carouselVideoRef.current.muted);
-    }
+  const toggleMute = (
+    ref: React.RefObject<HTMLVideoElement>,
+    muted: boolean,
+    setMuted: (v: boolean) => void
+  ) => {
+    if (!ref.current) return;
+    ref.current.muted = !muted;
+    setMuted(!muted);
+  };
+
+  const changeVideo = (index: number) => {
+    setCurrentIndex(index);
+    setCarouselPlaying(true);
+    setCarouselProgress(0);
   };
 
   const prevVideo = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? t.smartHomeSection.videos.length - 1 : prev - 1
+    changeVideo(
+      currentIndex === 0
+        ? t.smartHomeSection.videos.length - 1
+        : currentIndex - 1
     );
   };
 
   const nextVideo = () => {
-    setCurrentIndex((prev) =>
-      prev === t.smartHomeSection.videos.length - 1 ? 0 : prev + 1
+    changeVideo(
+      currentIndex === t.smartHomeSection.videos.length - 1
+        ? 0
+        : currentIndex + 1
     );
   };
 
   return (
     <>
-      {/* ================= الفيديو الرئيسي ================= */}
-      <section className="py-32 bg-gradient-to-br from-[#f8f6f3] to-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ================= Main Video ================= */}
+      <section className="py-32 bg-gradient-to-br from-[#f8f6f3] to-white">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-16 items-center">
+
+            {/* VIDEO */}
             <div className="relative">
               <video
                 ref={mainVideoRef}
@@ -73,94 +100,199 @@ export default function VideoSection({ t }: VideoSectionProps) {
                 loop
                 muted={mainMuted}
                 playsInline
-                className="w-full h-[520px] md:h-[600px] object-cover rounded-3xl shadow-2xl"
+                onTimeUpdate={() =>
+                  mainVideoRef.current &&
+                  setMainProgress(mainVideoRef.current.currentTime)
+                }
+                onLoadedMetadata={() =>
+                  mainVideoRef.current &&
+                  setMainDuration(mainVideoRef.current.duration)
+                }
+                className="w-full h-[520px] object-cover rounded-3xl shadow-2xl"
               />
 
-              <button
-                onClick={toggleMainSound}
-                className="absolute bottom-6 left-6 bg-black/50 text-white px-4 py-2 rounded-xl hover:bg-black/70 transition z-20"
-              >
-                {mainMuted ? "🔇" : "🔊"}
-              </button>
+              {/* CONTROLS */}
+              <div className="absolute bottom-6 left-6 flex gap-3 z-20">
+                <button
+                  onClick={() =>
+                    togglePlay(mainVideoRef, mainPlaying, setMainPlaying)
+                  }
+                  className="w-11 h-11 rounded-full bg-white/80 backdrop-blur flex items-center justify-center shadow"
+                >
+                  {mainPlaying ? (
+                    <Pause size={18} className="text-[#003B4A]" />
+                  ) : (
+                    <Play size={18} className="text-[#003B4A]" />
+                  )}
+                </button>
+
+                <button
+                  onClick={() =>
+                    toggleMute(mainVideoRef, mainMuted, setMainMuted)
+                  }
+                  className="w-11 h-11 rounded-full bg-white/80 backdrop-blur flex items-center justify-center shadow"
+                >
+                  {mainMuted ? (
+                    <VolumeX size={18} className="text-[#003B4A]" />
+                  ) : (
+                    <Volume2 size={18} className="text-[#003B4A]" />
+                  )}
+                </button>
+              </div>
+
+              {/* SEEK BAR */}
+              <input
+                type="range"
+                min={0}
+                max={mainDuration}
+                value={mainProgress}
+                onChange={(e) =>
+                  mainVideoRef.current &&
+                  (mainVideoRef.current.currentTime = Number(e.target.value))
+                }
+                className="absolute bottom-2 left-6 right-6 h-[3px] accent-[#D9C18E] cursor-pointer"
+              />
             </div>
 
-            <div className="space-y-6 animate-fade-in-right">
+            {/* TEXT */}
+            <div>
               <h3 className="text-xl font-bold text-[#003B4A]">
                 {t.videoSection.title}
               </h3>
-
-              <p className="text-gray-600 text-2xl leading-relaxed">
+              <p className="text-gray-600 text-2xl mt-4 leading-relaxed">
                 {t.videoSection.text}
               </p>
-
-              <button className="mt-6 px-10 py-4 bg-gradient-to-r from-[#D9C18E] to-[#c4a76d] text-white font-bold rounded-2xl shadow-xl hover:-translate-y-1 transition-all duration-300">
-                {t.videoSection.button}
-              </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ================= كروسيل Smart Home ================= */}
-      <section className="py-32 bg-gray-50 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ================= Smart Home (9:16) ================= */}
+      <section className="py-32 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-16 items-center">
 
-            {/* النص */}
-            <div className="space-y-6">
+            {/* TEXT */}
+            <div>
               <h2 className="text-3xl font-bold text-[#003B4A]">
                 {t.smartHomeSection.title}
               </h2>
-
-              <p className="text-gray-600 text-lg leading-relaxed">
+              <p className="text-gray-600 mt-4 leading-relaxed">
                 {t.smartHomeSection.description}
               </p>
-
-              <a
-                href="https://zuccess.io/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block mt-4 px-8 py-4 bg-gradient-to-r from-[#D9C18E] to-[#c4a76d] text-white font-bold rounded-2xl shadow-xl hover:-translate-y-1 transition-all duration-300"
-              >
-                Visit Zuccess Intelligent Home
-              </a>
             </div>
 
-            {/* الفيديو */}
-            <div className="relative w-full h-[360px] md:h-[420px]">
-              <video
-                key={currentIndex} // مهم لإعادة تشغيل الفيديو عند التغيير
-                ref={carouselVideoRef}
-                src={`/${t.smartHomeSection.videos[currentIndex].src}`}
-                autoPlay
-                loop
-                muted={carouselMuted}
-                playsInline
-                className="w-full h-full object-cover rounded-3xl shadow-xl"
-              />
+            {/* VIDEO + DOTS */}
+            <div className="flex flex-col items-center">
+              <div className="relative w-full max-w-[320px] aspect-[9/16] rounded-3xl shadow-xl overflow-hidden">
 
-              {/* الأسهم */}
-              <button
-                onClick={prevVideo}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white p-3 rounded-full shadow-lg z-20"
-              >
-                &#8592;
-              </button>
+                <video
+                  key={currentIndex}
+                  ref={carouselVideoRef}
+                  src={`/${t.smartHomeSection.videos[currentIndex].src}`}
+                  autoPlay
+                  loop
+                  muted={carouselMuted}
+                  playsInline
+                  onTimeUpdate={() =>
+                    carouselVideoRef.current &&
+                    setCarouselProgress(
+                      carouselVideoRef.current.currentTime
+                    )
+                  }
+                  onLoadedMetadata={() =>
+                    carouselVideoRef.current &&
+                    setCarouselDuration(
+                      carouselVideoRef.current.duration
+                    )
+                  }
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
 
-              <button
-                onClick={nextVideo}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white p-3 rounded-full shadow-lg z-20"
-              >
-                &#8594;
-              </button>
+                {/* CONTROLS */}
+                <div className="absolute bottom-6 left-4 flex gap-3 z-20">
+                  <button
+                    onClick={() =>
+                      togglePlay(
+                        carouselVideoRef,
+                        carouselPlaying,
+                        setCarouselPlaying
+                      )
+                    }
+                    className="w-10 h-10 rounded-full bg-white/80 backdrop-blur flex items-center justify-center shadow"
+                  >
+                    {carouselPlaying ? (
+                      <Pause size={16} className="text-[#003B4A]" />
+                    ) : (
+                      <Play size={16} className="text-[#003B4A]" />
+                    )}
+                  </button>
 
-              {/* الصوت */}
-              <button
-                onClick={toggleCarouselSound}
-                className="absolute bottom-4 right-4 bg-black/50 text-white px-4 py-2 rounded-xl hover:bg-black/70 transition z-20"
-              >
-                {carouselMuted ? "🔇" : "🔊"}
-              </button>
+                  <button
+                    onClick={() =>
+                      toggleMute(
+                        carouselVideoRef,
+                        carouselMuted,
+                        setCarouselMuted
+                      )
+                    }
+                    className="w-10 h-10 rounded-full bg-white/80 backdrop-blur flex items-center justify-center shadow"
+                  >
+                    {carouselMuted ? (
+                      <VolumeX size={16} className="text-[#003B4A]" />
+                    ) : (
+                      <Volume2 size={16} className="text-[#003B4A]" />
+                    )}
+                  </button>
+                </div>
+
+                {/* SEEK BAR */}
+                <input
+                  type="range"
+                  min={0}
+                  max={carouselDuration}
+                  value={carouselProgress}
+                  onChange={(e) =>
+                    carouselVideoRef.current &&
+                    (carouselVideoRef.current.currentTime = Number(e.target.value))
+                  }
+                  className="absolute bottom-2 left-4 right-4 h-[3px] accent-[#D9C18E] cursor-pointer"
+                />
+
+                {/* ARROWS */}
+                <button
+                  onClick={prevVideo}
+                  className="absolute left-3 top-1/2 -translate-y-1/2
+                             w-10 h-10 rounded-full bg-white/70 backdrop-blur
+                             flex items-center justify-center shadow-md hover:bg-white transition z-20"
+                >
+                  <span className="text-[#003B4A] text-2xl">‹</span>
+                </button>
+
+                <button
+                  onClick={nextVideo}
+                  className="absolute right-3 top-1/2 -translate-y-1/2
+                             w-10 h-10 rounded-full bg-white/70 backdrop-blur
+                             flex items-center justify-center shadow-md hover:bg-white transition z-20"
+                >
+                  <span className="text-[#003B4A] text-2xl">›</span>
+                </button>
+              </div>
+
+              {/* DOTS */}
+              <div className="flex gap-3 mt-6">
+                {t.smartHomeSection.videos.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => changeVideo(index)}
+                    className={`w-3 h-3 rounded-full transition ${
+                      currentIndex === index
+                        ? "bg-[#D9C18E]"
+                        : "bg-[#003B4A]/30 hover:bg-[#003B4A]/50"
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
 
           </div>
