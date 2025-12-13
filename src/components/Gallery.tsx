@@ -16,15 +16,15 @@ export default function Gallery({ t, galleryImages }: GalleryProps) {
     const [lightboxImage, setLightboxImage] = useState("");
 
     return (
-        <section className="py-32 bg-gradient-to-br from-[#003B4A] to-[#004B5A] overflow-hidden">
+        <section className="py-24 md:py-32 bg-gradient-to-br from-[#003B4A] to-[#004B5A] overflow-hidden">
             <div className="max-w-7xl mx-auto px-4">
 
                 {/* Title */}
-                <div className="text-center mb-20">
-                    <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
+                <div className="text-center mb-14 md:mb-20">
+                    <h2 className="text-4xl md:text-6xl font-bold text-white mb-4 md:mb-6">
                         {t.gallery.title}
                     </h2>
-                    <p className="text-xl text-white/80 max-w-2xl mx-auto">
+                    <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
                         {t.gallery.subtitle}
                     </p>
                 </div>
@@ -32,11 +32,20 @@ export default function Gallery({ t, galleryImages }: GalleryProps) {
                 <Swiper
                     modules={[Pagination, Navigation]}
                     centeredSlides
-                    slidesPerView={3}
-                    spaceBetween={60}
                     loop
                     navigation
                     pagination={{ clickable: true }}
+                    spaceBetween={40}
+                    breakpoints={{
+                        0: {
+                            slidesPerView: 1,
+                            spaceBetween: 20,
+                        },
+                        768: {
+                            slidesPerView: 3,
+                            spaceBetween: 60,
+                        },
+                    }}
                     className="gallery-swiper"
                 >
                     {galleryImages.map((image, index) => (
@@ -58,12 +67,12 @@ export default function Gallery({ t, galleryImages }: GalleryProps) {
                 {/* Lightbox */}
                 {lightboxOpen && (
                     <div
-                        className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center"
+                        className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
                         onClick={() => setLightboxOpen(false)}
                     >
                         <img
                             src={lightboxImage}
-                            className="max-w-5xl max-h-[90vh] rounded-2xl shadow-2xl"
+                            className="max-w-full max-h-[90vh] rounded-2xl shadow-2xl"
                         />
                     </div>
                 )}
@@ -71,35 +80,35 @@ export default function Gallery({ t, galleryImages }: GalleryProps) {
 
             {/* ===== CSS ===== */}
             <style>{`
-        /* 🔑 الحل هنا */
         .gallery-swiper {
-          padding-top: 60px;
-          padding-bottom: 80px;
-
-          /* لون الأسهم الحقيقي */
+          padding-top: 30px;
+          padding-bottom: 60px;
           --swiper-navigation-color: #CBB279;
           --swiper-pagination-color: #CBB279;
         }
 
         .gallery-slide {
           transition: all 0.5s ease;
-          transform: scale(0.8);
-          opacity: 0.4;
+          transform: scale(0.85);
+          opacity: 0.5;
+          display: flex;
+          justify-content: center;
         }
 
         .gallery-slide img {
           width: 100%;
+          max-width: 100%;
           height: 420px;
           object-fit: cover;
-          border-radius: 24px;
-          box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+          border-radius: 22px;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.35);
           transition: all 0.5s ease;
           cursor: pointer;
         }
 
-        /* ⭐ الصورة اللي بالنص */
+        /* ⭐ الصورة النشطة */
         .swiper-slide-active .gallery-slide {
-          transform: scale(1.1) translateY(-20px);
+          transform: scale(1.1) translateY(-18px);
           opacity: 1;
           z-index: 10;
         }
@@ -108,12 +117,12 @@ export default function Gallery({ t, galleryImages }: GalleryProps) {
           box-shadow: 0 30px 80px rgba(203,178,121,0.55);
         }
 
-        /* ===== الأسهم ===== */
+        /* الأسهم */
         .swiper-button-next,
         .swiper-button-prev {
-          width: 30px;
-          height: 30px;
-          opacity: 0.7;
+          width: 28px;
+          height: 28px;
+          opacity: 0.8;
           transition: transform 0.25s ease, opacity 0.25s ease;
         }
 
@@ -123,7 +132,7 @@ export default function Gallery({ t, galleryImages }: GalleryProps) {
           opacity: 1;
         }
 
-        /* ===== Pagination dots ===== */
+        /* pagination dots */
         .swiper-pagination-bullet {
           background: #ffffff80;
           opacity: 1;
@@ -133,14 +142,20 @@ export default function Gallery({ t, galleryImages }: GalleryProps) {
           background: #CBB279;
         }
 
-        /* موبايل */
-        @media (max-width: 768px) {
+        /* 📱 موبايل */
+        @media (max-width: 767px) {
+          .gallery-slide {
+            transform: scale(1);
+            opacity: 1;
+          }
+
           .gallery-slide img {
-            height: 320px;
+            height: auto;
+            aspect-ratio: 4 / 3;
           }
 
           .swiper-slide-active .gallery-slide {
-            transform: scale(1.05) translateY(-10px);
+            transform: scale(1);
           }
         }
       `}</style>
