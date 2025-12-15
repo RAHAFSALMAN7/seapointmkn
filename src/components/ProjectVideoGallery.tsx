@@ -1,5 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import {
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Maximize,
+} from "lucide-react";
 
 const videos = [
   "SEAPOINT.mp4",
@@ -26,7 +32,6 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
   const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
-
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const prev = () => {
@@ -64,6 +69,17 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
     if (!centerRef.current) return;
     centerRef.current.muted = !muted;
     setMuted(!muted);
+  };
+
+  const toggleFullscreen = () => {
+    const video = centerRef.current;
+    if (!video) return;
+
+    if (!document.fullscreenElement) {
+      video.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
   };
 
   const getIndex = (offset: number) =>
@@ -168,6 +184,11 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
                 }
                 className="flex-1 h-[3px] accent-[#D9C18E] cursor-pointer"
               />
+
+              {/* FULLSCREEN BUTTON */}
+              <button onClick={toggleFullscreen}>
+                <Maximize size={18} className="text-white" />
+              </button>
             </div>
           </div>
 
