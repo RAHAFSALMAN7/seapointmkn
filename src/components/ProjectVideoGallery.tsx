@@ -27,7 +27,6 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
 
-  // ✅ للسموث
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const prev = () => {
@@ -94,7 +93,7 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
         {/* SLIDER */}
         <div className="relative flex items-center justify-center gap-6 md:gap-12">
 
-          {/* LEFT */}
+          {/* LEFT PREVIEW */}
           <video
             src={`/${videos[getIndex(-1)]}`}
             muted
@@ -108,7 +107,7 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
             "
           />
 
-          {/* CENTER */}
+          {/* CENTER VIDEO */}
           <div className="relative z-10">
             <video
               ref={centerRef}
@@ -172,7 +171,7 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
             </div>
           </div>
 
-          {/* RIGHT */}
+          {/* RIGHT PREVIEW */}
           <video
             src={`/${videos[getIndex(1)]}`}
             muted
@@ -186,13 +185,16 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
             "
           />
 
-          {/* ARROWS */}
+          {/* LEFT ARROW */}
           <button
             onClick={prev}
             className="
               absolute left-2 md:left-10
+              bottom-1/2 translate-y-1/2
+              z-20
               w-10 h-10 md:w-12 md:h-12
-              rounded-full bg-white/80
+              rounded-full bg-white/90
+              backdrop-blur
               flex items-center justify-center
               shadow-lg
             "
@@ -200,18 +202,23 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
             <span className="text-2xl text-[#003B4A]">‹</span>
           </button>
 
+          {/* RIGHT ARROW */}
           <button
             onClick={next}
             className="
               absolute right-2 md:right-10
+              bottom-1/2 translate-y-1/2
+              z-20
               w-10 h-10 md:w-12 md:h-12
-              rounded-full bg-white/80
+              rounded-full bg-white/90
+              backdrop-blur
               flex items-center justify-center
               shadow-lg
             "
           >
             <span className="text-2xl text-[#003B4A]">›</span>
           </button>
+
         </div>
       </div>
     </section>
