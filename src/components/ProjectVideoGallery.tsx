@@ -8,8 +8,8 @@ import {
 } from "lucide-react";
 
 const videos = [
-  "SEAPOINT.mp4",
   "SEAPOINTPROJECT.mp4",
+  "SEAPOINT.mp4",
   "video_MKN.mp4",
   "video.mp4",
 ];

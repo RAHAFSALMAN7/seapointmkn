@@ -72,7 +72,7 @@ export const content = {
       note:
         'للاطلاع على جميع التفاصيل والمخططات وخطط الدفع، يمكنك تحميل البروشور الكامل.',
       brochure:
-        'https://seapoint.thrillagency.net/wp-content/uploads/2025/04/Sea-Point-Profile.pdf',
+        'https://drive.google.com/file/d/1oyDYSC1ZwVEx1NZ-VDKr89tRbwEud12N/view?usp=sharing',
 
       download: 'تحميل البروشور PDF',
 
