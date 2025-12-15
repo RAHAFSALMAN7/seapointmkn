@@ -5,6 +5,18 @@ interface CTAProps {
 }
 
 export default function CTA({ t }: CTAProps) {
+
+  /* ===== WIDGET ACTIONS ===== */
+  const openChatWidget = () => {
+    const chatBtn = document.getElementById("chat-widget-button");
+    chatBtn?.click();
+  };
+
+  const openCallWidget = () => {
+    const callBtn = document.getElementById("chat-widget-call-button");
+    callBtn?.click();
+  };
+
   return (
     <section className="py-32 bg-gradient-to-br from-[#f8f6f3] via-[#ede7dd] to-[#f8f6f3] relative overflow-hidden">
 
@@ -22,41 +34,69 @@ export default function CTA({ t }: CTAProps) {
               {t.cta.title}
             </h2>
 
-            <p className="text-2xl text-gray-700 mb-14 leading-relaxed">
+            <p className="text-2xl text-gray-700 mb-10 leading-relaxed">
               {t.cta.subtitle}
             </p>
 
-            {/* BUTTONS */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start mb-14">
+            {/* ===== CONTACT TITLE ===== */}
+            <h4 className="text-xl font-bold text-[#003B4A] mb-2">
+              {t.cta.contactTitle}
+            </h4>
+
+            <p className="text-gray-600 mb-10">
+              {t.cta.contactDescription}
+            </p>
+
+            {/* ===== CONTACT METHODS ===== */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-14">
+
+              {/* CALL */}
+              <button
+                onClick={openCallWidget}
+                className="flex flex-col items-center text-center group"
+              >
+                <div className="w-20 h-20 rounded-full bg-[#003B4A]
+                                flex items-center justify-center
+                                shadow-xl mb-4 group-hover:scale-110 transition">
+                  <Phone size={32} className="text-white" />
+                </div>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  {t.cta.contactMethods.call}
+                </p>
+              </button>
+
+              {/* CHAT */}
+              <button
+                onClick={openChatWidget}
+                className="flex flex-col items-center text-center group"
+              >
+                <div className="w-20 h-20 rounded-full bg-[#D9C18E]
+                                flex items-center justify-center
+                                shadow-xl mb-4 group-hover:scale-110 transition">
+                  <Mail size={30} className="text-[#003B4A]" />
+                </div>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  {t.cta.contactMethods.chat}
+                </p>
+              </button>
 
               {/* WHATSAPP */}
               <a
-                href="https://wa.me/972595036932?text=Start"
+                href="https://wa.me/972595036932"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative inline-flex items-center justify-center gap-4
-                           px-12 py-6 bg-gradient-to-r from-[#D9C18E] to-[#c4a76d]
-                           text-white text-xl font-bold rounded-2xl
-                           shadow-2xl hover:shadow-3xl
-                           transform hover:-translate-y-2 transition-all duration-300 overflow-hidden"
+                className="flex flex-col items-center text-center group"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#c4a76d] to-[#D9C18E] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <Phone className="relative z-10" size={26} />
-                <span className="relative z-10">{t.cta.whatsapp}</span>
+                <div className="w-20 h-20 rounded-full bg-[#25D366]
+                                flex items-center justify-center
+                                shadow-xl mb-4 group-hover:scale-110 transition">
+                  <MessageSquare size={30} className="text-white" />
+                </div>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  {t.cta.contactMethods.whatsapp}
+                </p>
               </a>
 
-              {/* CALL */}
-              <a
-                href="tel:+972595036932"
-                className="inline-flex items-center justify-center gap-4
-                           px-12 py-6 bg-[#003B4A] text-white
-                           text-xl font-bold rounded-2xl
-                           shadow-2xl hover:bg-[#004B5A]
-                           transform hover:-translate-y-2 transition-all duration-300"
-              >
-                <Phone size={26} />
-                <span>{t.cta.call}</span>
-              </a>
             </div>
 
             {/* NOTE */}
@@ -69,7 +109,7 @@ export default function CTA({ t }: CTAProps) {
           <div className="animate-fade-in-up bg-white/70 backdrop-blur rounded-3xl p-10 shadow-2xl border border-[#D9C18E]/30">
 
             <h3 className="text-3xl font-bold text-[#003B4A] mb-8 text-center">
-              {t.cta.formTitle || "تواصل معنا"}
+              {t.cta.formTitle}
             </h3>
 
             <form className="grid gap-6">
@@ -79,7 +119,7 @@ export default function CTA({ t }: CTAProps) {
                 <User className="absolute top-1/2 -translate-y-1/2 left-4 text-[#D9C18E]" />
                 <input
                   type="text"
-                  placeholder={t.cta.name || "الاسم الكامل"}
+                  placeholder={t.cta.name}
                   className="w-full pl-12 pr-4 py-4 rounded-xl border border-[#D9C18E]/30
                              focus:outline-none focus:ring-2 focus:ring-[#D9C18E]"
                 />
@@ -90,7 +130,7 @@ export default function CTA({ t }: CTAProps) {
                 <Phone className="absolute top-1/2 -translate-y-1/2 left-4 text-[#D9C18E]" />
                 <input
                   type="tel"
-                  placeholder={t.cta.phone || "رقم الهاتف"}
+                  placeholder={t.cta.phone}
                   className="w-full pl-12 pr-4 py-4 rounded-xl border border-[#D9C18E]/30
                              focus:outline-none focus:ring-2 focus:ring-[#D9C18E]"
                 />
@@ -101,7 +141,7 @@ export default function CTA({ t }: CTAProps) {
                 <Mail className="absolute top-1/2 -translate-y-1/2 left-4 text-[#D9C18E]" />
                 <input
                   type="email"
-                  placeholder={t.cta.email || "البريد الإلكتروني"}
+                  placeholder={t.cta.email}
                   className="w-full pl-12 pr-4 py-4 rounded-xl border border-[#D9C18E]/30
                              focus:outline-none focus:ring-2 focus:ring-[#D9C18E]"
                 />
@@ -112,7 +152,7 @@ export default function CTA({ t }: CTAProps) {
                 <MessageSquare className="absolute top-5 left-4 text-[#D9C18E]" />
                 <textarea
                   rows={4}
-                  placeholder={t.cta.message || "رسالتك"}
+                  placeholder={t.cta.message}
                   className="w-full pl-12 pr-4 py-4 rounded-xl border border-[#D9C18E]/30
                              focus:outline-none focus:ring-2 focus:ring-[#D9C18E]"
                 />
@@ -126,7 +166,7 @@ export default function CTA({ t }: CTAProps) {
                            py-4 rounded-xl shadow-xl
                            hover:shadow-2xl hover:scale-105 transition"
               >
-                {t.cta.send || "إرسال"}
+                {t.cta.send}
               </button>
 
             </form>

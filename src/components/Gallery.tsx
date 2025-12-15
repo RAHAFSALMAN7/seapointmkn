@@ -11,6 +11,9 @@ interface GalleryProps {
 }
 
 export default function Gallery({ t }: GalleryProps) {
+  // 🛑 Guard مهم جدًا
+  if (!t?.gallery?.sections) return null;
+
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState("");
 
@@ -20,6 +23,15 @@ export default function Gallery({ t }: GalleryProps) {
     "/2seapoint.jpg",
     "/3seapoint.jpg",
     "/4seapoint.jpg",
+    "/6seapoint.jpg",
+    "/7seapoint.jpg",
+    "/8seapoint.jpg",
+    "/9seapoint.jpg",
+    "/10seapoint.jpg",
+    "/11seapoint.jpg",
+    "/12seapoint.jpg",
+    "/13seapoint.jpg",
+    "/14seapoint.jpg",
   ];
 
   /* 🛎️ صور الخدمات */
@@ -28,6 +40,8 @@ export default function Gallery({ t }: GalleryProps) {
     "/services2.jpg",
     "/services3.jpg",
     "/services4.jpg",
+    "/services5.jpg",
+    "/services6.jpg",
   ];
 
   const GallerySection = ({
@@ -55,19 +69,17 @@ export default function Gallery({ t }: GalleryProps) {
         modules={[Pagination, Navigation]}
         centeredSlides
         loop
-        initialSlide={1}   // ✅ الصورة الثانية تكون بالنص
+        speed={900}                 // ✅ انتقال ناعم
+        slidesPerGroup={1}          // ✅ بدون قفز
+        watchSlidesProgress         // ✅ سلاسة أعلى
+        grabCursor                  // ✅ إحساس سحب طبيعي
+        initialSlide={1}
         navigation
         pagination={{ clickable: true }}
         spaceBetween={40}
         breakpoints={{
-          0: {
-            slidesPerView: 1,
-            spaceBetween: 20,
-          },
-          768: {
-            slidesPerView: 3,
-            spaceBetween: 60,
-          },
+          0: { slidesPerView: 1, spaceBetween: 20 },
+          768: { slidesPerView: 3, spaceBetween: 60 },
         }}
         className="gallery-swiper"
       >
@@ -105,21 +117,15 @@ export default function Gallery({ t }: GalleryProps) {
 
         {/* 🏡 SHOW APARTMENT */}
         <GallerySection
-          title={t.gallery.showApartmentTitle || "شقة العرض"}
-          subtitle={
-            t.gallery.showApartmentSubtitle ||
-            "استعرض تفاصيل شقة العرض بتصميمها العصري"
-          }
+          title={t.gallery.sections.showApartment.title}
+          subtitle={t.gallery.sections.showApartment.subtitle}
           images={showApartmentImages}
         />
 
         {/* 🛎️ SERVICES */}
         <GallerySection
-          title={t.gallery.servicesTitle || "الخدمات"}
-          subtitle={
-            t.gallery.servicesSubtitle ||
-            "مرافق وخدمات متكاملة لأسلوب حياة فاخر"
-          }
+          title={t.gallery.sections.services.title}
+          subtitle={t.gallery.sections.services.subtitle}
           images={servicesImages}
         />
       </div>
@@ -137,7 +143,7 @@ export default function Gallery({ t }: GalleryProps) {
         </div>
       )}
 
-      {/* ===== CSS ===== */}
+      {/* ===== GALLERY STYLES (SMOOTH + OLD DESIGN) ===== */}
       <style>{`
         .gallery-swiper {
           padding-top: 30px;
@@ -147,11 +153,12 @@ export default function Gallery({ t }: GalleryProps) {
         }
 
         .gallery-slide {
-          transition: all 0.5s ease;
           transform: scale(0.85);
           opacity: 0.5;
           display: flex;
           justify-content: center;
+          transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                      opacity 0.6s ease;
         }
 
         .gallery-slide img {
@@ -160,8 +167,9 @@ export default function Gallery({ t }: GalleryProps) {
           object-fit: cover;
           border-radius: 22px;
           box-shadow: 0 20px 40px rgba(0,0,0,0.35);
-          transition: all 0.5s ease;
           cursor: pointer;
+          transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                      box-shadow 0.6s ease;
         }
 
         .swiper-slide-active .gallery-slide {

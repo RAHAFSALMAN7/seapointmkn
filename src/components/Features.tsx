@@ -5,6 +5,14 @@ interface FeaturesProps {
 }
 
 export default function Features({ t }: FeaturesProps) {
+
+  const prices = t.pricing.items.map((i: any) => i.priceNumber);
+  const areas = t.pricing.items.map((i: any) => i.areaNumber);
+
+  const minPrice = Math.min(...prices);
+  const minArea = Math.min(...areas);
+  const maxArea = Math.max(...areas);
+
   return (
     <section className="py-32 bg-gradient-to-b from-white to-[#f8f6f3]">
       <div className="max-w-7xl mx-auto px-4">
@@ -27,34 +35,27 @@ export default function Features({ t }: FeaturesProps) {
 
           {/* PRICES */}
           <div className="flex flex-col items-center">
-            <Home
-              size={56}
-              className="text-[#D9C18E] mb-6"
-            />
+            <Home size={56} className="text-[#D9C18E] mb-6" />
 
             <h3 className="text-2xl font-bold text-[#003B4A] mb-3">
               {t.pricing.labels.price}
             </h3>
 
             <p className="text-[#003B4A]/70 text-lg">
-              {t.pricing.items[0].price}
+              يبدأ من {minPrice.toLocaleString()} ريال
             </p>
           </div>
 
           {/* AREAS */}
           <div className="flex flex-col items-center">
-            <Ruler
-              size={56}
-              className="text-[#D9C18E] mb-6"
-            />
+            <Ruler size={56} className="text-[#D9C18E] mb-6" />
 
             <h3 className="text-2xl font-bold text-[#003B4A] mb-3">
               {t.pricing.labels.area}
             </h3>
 
             <p className="text-[#003B4A]/70 text-lg">
-              {t.pricing.items[0].area} –{" "}
-              {t.pricing.items[t.pricing.items.length - 1].area}
+              من {minArea} م² إلى {maxArea} م²
             </p>
           </div>
 
