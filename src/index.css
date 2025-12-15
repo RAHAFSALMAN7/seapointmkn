@@ -6,7 +6,7 @@
    1) السماح للويدجت بالعمل فوق كل العناصر
 ------------------------------------------*/
 
-  
+
 
 /* بعض الويدجتات تضع container */
 .chat-widget-container,
@@ -21,7 +21,7 @@
 ------------------------------------------*/
 
 #root {
-    pointer-events: auto !important; 
+    pointer-events: auto !important;
     position: relative;
     z-index: 1;
 }
