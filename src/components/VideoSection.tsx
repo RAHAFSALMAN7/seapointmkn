@@ -169,11 +169,10 @@ export default function VideoSection({ t }: VideoSectionProps) {
                       setCurrentIndex(index);
                       setPlaying(true);
                     }}
-                    className={`w-2.5 h-2.5 rounded-full transition ${
-                      currentIndex === index
-                        ? "bg-[#D9C18E] shadow-[0_0_10px_#D9C18E]"
-                        : "bg-[#003B4A]/30 hover:bg-[#003B4A]/50"
-                    }`}
+                    className={`w-2.5 h-2.5 rounded-full transition ${currentIndex === index
+                      ? "bg-[#D9C18E] shadow-[0_0_10px_#D9C18E]"
+                      : "bg-[#003B4A]/30 hover:bg-[#003B4A]/50"
+                      }`}
                   />
                 ))}
               </div>
