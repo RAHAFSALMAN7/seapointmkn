@@ -1,4 +1,4 @@
-import { Phone, Download } from "lucide-react";
+import { Phone } from "lucide-react";
 
 interface FooterProps {
   t: any;
@@ -16,65 +16,6 @@ export default function Footer({ t }: FooterProps) {
 
   return (
     <>
-      {/* ===== OUR WORK SECTION ===== */}
-      <section className="py-20 bg-[#f8f6f3] border-b border-[#003B4A]/10">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-
-          {/* ✅ مترجم */}
-          <h2 className="text-4xl md:text-5xl font-bold text-[#003B4A] mb-6">
-            {t.ourWork.title}
-          </h2>
-
-          <div className="w-24 h-1 bg-[#D9C18E] mx-auto mb-12" />
-
-          <div className="flex flex-col md:flex-row justify-center gap-6">
-
-            {/* File 1 */}
-            <a
-              href="https://drive.google.com/file/d/1oyDYSC1ZwVEx1NZ-VDKr89tRbwEud12N/view?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="
-                flex items-center justify-center gap-3
-                px-8 py-4
-                rounded-full
-                bg-[#003B4A]
-                text-white
-                text-lg font-medium
-                hover:bg-[#002F3A]
-                transition
-                shadow-lg
-              "
-            >
-              <Download size={20} />
-              {t.ourWork.downloads.first}
-            </a>
-
-            {/* File 2 */}
-            <a
-              href="https://drive.google.com/file/d/1zFhpucdcpBh7DBNY8atZBn9d2MhcaAPZ/view?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="
-                flex items-center justify-center gap-3
-                px-8 py-4
-                rounded-full
-                bg-[#D9C18E]
-                text-[#003B4A]
-                text-lg font-medium
-                hover:bg-[#c4a76d]
-                transition
-                shadow-lg
-              "
-            >
-              <Download size={20} />
-              {t.ourWork.downloads.second}
-            </a>
-
-          </div>
-        </div>
-      </section>
-
       {/* ===== PARTNERS SECTION ===== */}
       <section className="py-20 bg-[#f8f6f3]">
         <div className="max-w-7xl mx-auto px-4 text-center">
@@ -101,7 +42,7 @@ export default function Footer({ t }: FooterProps) {
               >
                 <img
                   src={img}
-                  alt={`Partner ${index + 1}`}
+                  alt={`Sea Point Partner ${index + 1}`}
                   className="w-full h-full object-contain p-4"
                 />
               </div>
@@ -116,7 +57,7 @@ export default function Footer({ t }: FooterProps) {
 
           <div className="grid md:grid-cols-4 gap-12 mb-12">
 
-            {/* LOGO */}
+            {/* LOGO & DESCRIPTION */}
             <div className="md:col-span-2">
               <img
                 src="/Untitled-2.png"

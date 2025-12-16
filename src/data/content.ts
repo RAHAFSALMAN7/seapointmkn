@@ -145,24 +145,17 @@ export const content = {
     partners: {
       title: 'شركاء النجاح'
     },
-    ourWork: {
-      title: 'من أعمالنا',
-      downloads: {
-        first: 'تحميل الملف الأول',
-        second: 'تحميل الملف الثاني'
-      }
-    },
 
     footer: {
-      description: 'سي بوينت — نبني مستقبل السكن الفاخر في المملكة العربية السعودية',
-      quickLinks: 'روابط سريعة',
-      links: ['المشروع', 'المميزات', 'المعرض', 'من نحن'],
-      contact: 'تواصل معنا',
-      location: 'المملكة العربية السعودية',
-      locationDetail: 'الخبر – المنطقة الشرقية',
-      copyright:
-        '© 2025 سي بوينت للتطوير العقاري. جميع الحقوق محفوظة'
-    }
+  description: 'سي بوينت — نبني مستقبل السكن الفاخر في المملكة العربية السعودية',
+  quickLinks: 'روابط سريعة',
+  links: ['المشروع', 'المميزات', 'المعرض', 'من نحن'],
+  contact: 'تواصل معنا',
+  location: 'المملكة العربية السعودية',
+  locationDetail: 'الخبر – المنطقة الشرقية',
+  copyright:
+    '© 2025 سي بوينت للتطوير العقاري. جميع الحقوق محفوظة'
+}
 
   },
 
@@ -320,10 +313,8 @@ export const content = {
       links: ['Project', 'Features', 'Gallery', 'About Us'],
       contact: 'Contact Us',
       location: 'Kingdom of Saudi Arabia',
-      locationDetail: 'Al Khobar – Eastern Province',
       copyright:
         '© 2025 Sea Point Real Estate Development. All rights reserved'
     }
-
   }
 };

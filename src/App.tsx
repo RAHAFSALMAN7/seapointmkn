@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import ProjectVideoGallery from "./components/ProjectVideoGallery";
 
 import { content } from "./data/content";
+import VirtualSellerCentered from "./components/VirtualSeller";
 
 function App() {
   const [language, setLanguage] = useState<"ar" | "en">("ar");
@@ -27,9 +28,10 @@ function App() {
       <ProjectVideoGallery t={t} />
       {/* VIRTUAL TOUR */}
       <VirtualTour t={t} />
+ 
       {/* SMART HOME VIDEO SECTION */}
       <VideoSection t={t} />
-
+<VirtualSellerCentered/>
 
 
       {/* GALLERY (Show Apartment + Services) */}
