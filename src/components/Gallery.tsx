@@ -69,10 +69,10 @@ export default function Gallery({ t }: GalleryProps) {
         modules={[Pagination, Navigation]}
         centeredSlides
         loop
-        speed={900}                 // ✅ انتقال ناعم
-        slidesPerGroup={1}          // ✅ بدون قفز
-        watchSlidesProgress         // ✅ سلاسة أعلى
-        grabCursor                  // ✅ إحساس سحب طبيعي
+        speed={900}
+        slidesPerGroup={1}
+        watchSlidesProgress
+        grabCursor
         initialSlide={1}
         navigation
         pagination={{ clickable: true }}
@@ -102,7 +102,11 @@ export default function Gallery({ t }: GalleryProps) {
   );
 
   return (
-    <section className="py-24 md:py-32 bg-gradient-to-br from-[#003B4A] to-[#004B5A] overflow-hidden">
+    // ✅ هذا هو التعديل المهم
+    <section
+      id="gallery"
+      className="py-24 md:py-32 bg-gradient-to-br from-[#003B4A] to-[#004B5A] overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto px-4">
 
         {/* MAIN TITLE */}
@@ -143,7 +147,7 @@ export default function Gallery({ t }: GalleryProps) {
         </div>
       )}
 
-      {/* ===== GALLERY STYLES (SMOOTH + OLD DESIGN) ===== */}
+      {/* ===== GALLERY STYLES ===== */}
       <style>{`
         .gallery-swiper {
           padding-top: 30px;

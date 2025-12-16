@@ -7,11 +7,21 @@ import {
   Maximize,
 } from "lucide-react";
 
+/**
+ * Cloudinary video URLs
+ */
 const videos = [
-  "SEAPOINTPROJECT.mp4",
-  "SEAPOINT.mp4",
-  "video_MKN.mp4",
-  "video.mp4",
+  // 1️⃣ SEAPOINTPROJECT (الأول)
+  "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765885001/SEAPOINTPROJECT_oxzxlr.mp4",
+
+  // 2️⃣ video_MKN
+  "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765884844/video_MKN_k0ru3i.mp4",
+
+  // 3️⃣ video
+  "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765884954/video_pw2ppx.mp4",
+
+  // 4️⃣ SEAPOINT
+  "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765885043/SEAPOINT_o5euuq.mp4",
 ];
 
 interface ProjectVideoGalleryProps {
@@ -53,7 +63,7 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
   useEffect(() => {
     if (centerRef.current) {
       centerRef.current.currentTime = 0;
-      centerRef.current.play();
+      centerRef.current.play().catch(() => {});
       setPlaying(true);
       setProgress(0);
     }
@@ -106,29 +116,34 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
           </p>
         </div>
 
-        {/* SLIDER */}
-        <div className="relative flex items-center justify-center gap-6 md:gap-12">
+        {/* SLIDER (direction fixed) */}
+        <div
+          className="relative flex items-center justify-center gap-6 md:gap-12"
+          style={{ direction: "ltr" }}
+        >
 
           {/* LEFT PREVIEW */}
           <video
-            src={`/${videos[getIndex(-1)]}`}
+            src={videos[getIndex(-1)]}
             muted
             playsInline
+            preload="metadata"
             className="
               hidden md:block
               w-[220px] lg:w-[260px]
-              h-[150px] lg:h-[180px]
+              aspect-video
               object-cover rounded-3xl
               opacity-40 scale-90
             "
           />
 
           {/* CENTER VIDEO */}
-          <div className="relative z-10">
+          <div className="relative z-10 w-full flex justify-center">
             <video
               ref={centerRef}
               key={videos[current]}
-              src={`/${videos[current]}`}
+              src={videos[current]}
+              preload="metadata"
               autoPlay
               loop
               muted={muted}
@@ -142,9 +157,10 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
                 setDuration(centerRef.current.duration)
               }
               className={`
-                w-[90vw] max-w-[360px]
-                h-[200px] sm:h-[220px] md:h-[240px]
-                object-cover rounded-3xl shadow-2xl
+                w-[90vw] max-w-[720px]
+                aspect-video
+                object-cover
+                rounded-3xl shadow-2xl
                 transition-all duration-300 ease-in-out
                 ${isTransitioning ? "opacity-0 scale-95" : "opacity-100 scale-100"}
               `}
@@ -185,7 +201,6 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
                 className="flex-1 h-[3px] accent-[#D9C18E] cursor-pointer"
               />
 
-              {/* FULLSCREEN BUTTON */}
               <button onClick={toggleFullscreen}>
                 <Maximize size={18} className="text-white" />
               </button>
@@ -194,19 +209,20 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
 
           {/* RIGHT PREVIEW */}
           <video
-            src={`/${videos[getIndex(1)]}`}
+            src={videos[getIndex(1)]}
             muted
             playsInline
+            preload="metadata"
             className="
               hidden md:block
               w-[220px] lg:w-[260px]
-              h-[150px] lg:h-[180px]
+              aspect-video
               object-cover rounded-3xl
               opacity-40 scale-90
             "
           />
 
-          {/* LEFT ARROW */}
+          {/* LEFT ARROW (always left) */}
           <button
             onClick={prev}
             className="
@@ -223,7 +239,7 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
             <span className="text-2xl text-[#003B4A]">‹</span>
           </button>
 
-          {/* RIGHT ARROW */}
+          {/* RIGHT ARROW (always right) */}
           <button
             onClick={next}
             className="

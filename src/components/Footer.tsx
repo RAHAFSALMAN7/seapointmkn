@@ -1,4 +1,4 @@
-import { Phone } from "lucide-react";
+import { Phone, Download } from "lucide-react";
 
 interface FooterProps {
   t: any;
@@ -16,6 +16,65 @@ export default function Footer({ t }: FooterProps) {
 
   return (
     <>
+      {/* ===== OUR WORK SECTION ===== */}
+      <section className="py-20 bg-[#f8f6f3] border-b border-[#003B4A]/10">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+
+          {/* ✅ مترجم */}
+          <h2 className="text-4xl md:text-5xl font-bold text-[#003B4A] mb-6">
+            {t.ourWork.title}
+          </h2>
+
+          <div className="w-24 h-1 bg-[#D9C18E] mx-auto mb-12" />
+
+          <div className="flex flex-col md:flex-row justify-center gap-6">
+
+            {/* File 1 */}
+            <a
+              href="https://drive.google.com/file/d/1oyDYSC1ZwVEx1NZ-VDKr89tRbwEud12N/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                flex items-center justify-center gap-3
+                px-8 py-4
+                rounded-full
+                bg-[#003B4A]
+                text-white
+                text-lg font-medium
+                hover:bg-[#002F3A]
+                transition
+                shadow-lg
+              "
+            >
+              <Download size={20} />
+              {t.ourWork.downloads.first}
+            </a>
+
+            {/* File 2 */}
+            <a
+              href="https://drive.google.com/file/d/1zFhpucdcpBh7DBNY8atZBn9d2MhcaAPZ/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                flex items-center justify-center gap-3
+                px-8 py-4
+                rounded-full
+                bg-[#D9C18E]
+                text-[#003B4A]
+                text-lg font-medium
+                hover:bg-[#c4a76d]
+                transition
+                shadow-lg
+              "
+            >
+              <Download size={20} />
+              {t.ourWork.downloads.second}
+            </a>
+
+          </div>
+        </div>
+      </section>
+
       {/* ===== PARTNERS SECTION ===== */}
       <section className="py-20 bg-[#f8f6f3]">
         <div className="max-w-7xl mx-auto px-4 text-center">
@@ -55,10 +114,9 @@ export default function Footer({ t }: FooterProps) {
       <footer className="bg-[#f8f6f3] text-[#003B4A] py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* TOP GRID */}
           <div className="grid md:grid-cols-4 gap-12 mb-12">
 
-            {/* LOGO + DESCRIPTION */}
+            {/* LOGO */}
             <div className="md:col-span-2">
               <img
                 src="/Untitled-2.png"
@@ -92,11 +150,19 @@ export default function Footer({ t }: FooterProps) {
                 {t.footer.links.map((link: string, index: number) => {
                   const isAbout =
                     link === "من نحن" || link === "About Us";
+                  const isGallery =
+                    link === "المعرض" || link === "Gallery";
 
                   return (
                     <a
                       key={index}
-                      href={isAbout ? "https://www.mkn-sa.net/" : "#"}
+                      href={
+                        isGallery
+                          ? "#gallery"
+                          : isAbout
+                          ? "https://www.mkn-sa.net/"
+                          : "#"
+                      }
                       target={isAbout ? "_blank" : "_self"}
                       rel={isAbout ? "noopener noreferrer" : undefined}
                       className="block text-[#003B4A]/70 hover:text-[#D9C18E] transition-colors text-lg"
@@ -108,7 +174,7 @@ export default function Footer({ t }: FooterProps) {
               </div>
             </div>
 
-            {/* CONTACT INFO */}
+            {/* CONTACT */}
             <div>
               <h3 className="text-2xl font-bold mb-6 text-[#003B4A]">
                 {t.footer.contact}
@@ -116,36 +182,26 @@ export default function Footer({ t }: FooterProps) {
 
               <div className="space-y-3 text-[#003B4A]/70 text-lg">
                 <p>{t.footer.location}</p>
+                <p>{t.footer.locationDetail}</p>
 
                 <p className="flex items-center gap-2">
                   <Phone size={18} />
-                  +966 50 000 0000
+                  0566226683
                 </p>
 
-                <p>info@mkn-sa.net</p>
+                <p className="flex items-center gap-2">
+                  <Phone size={18} />
+                  0566226684
+                </p>
+
+                <p>sales@mkn-sa.com</p>
               </div>
             </div>
 
           </div>
 
-          {/* BOTTOM BAR */}
-          <div className="border-t border-[#003B4A]/10 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-
-              <p className="text-[#003B4A]/50 text-center">
-                {t.footer.copyright}
-              </p>
-
-              <div className="flex gap-6 text-[#003B4A]/50 text-sm">
-                <a href="#" className="hover:text-[#D9C18E] transition-colors">
-                  {t.footer.privacy}
-                </a>
-                <a href="#" className="hover:text-[#D9C18E] transition-colors">
-                  {t.footer.terms}
-                </a>
-              </div>
-
-            </div>
+          <div className="border-t border-[#003B4A]/10 pt-8 text-center text-[#003B4A]/50">
+            {t.footer.copyright}
           </div>
 
         </div>

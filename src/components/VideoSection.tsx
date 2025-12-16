@@ -1,5 +1,11 @@
 import { useRef, useState } from "react";
-import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import {
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Maximize,
+} from "lucide-react";
 
 interface Video {
   src: string;
@@ -34,6 +40,17 @@ export default function VideoSection({ t }: VideoSectionProps) {
     if (!videoRef.current) return;
     videoRef.current.muted = !muted;
     setMuted(!muted);
+  };
+
+  const toggleFullscreen = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (!document.fullscreenElement) {
+      video.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
   };
 
   const prevVideo = () => {
@@ -87,9 +104,14 @@ export default function VideoSection({ t }: VideoSectionProps) {
                 />
 
                 {/* CONTROLS */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2
-                  bg-black/40 backdrop-blur-lg rounded-full px-4 py-2 flex items-center gap-4">
-
+                <div
+                  className="
+                    absolute bottom-4 left-1/2 -translate-x-1/2
+                    bg-black/40 backdrop-blur-lg
+                    rounded-full px-4 py-2
+                    flex items-center gap-4
+                  "
+                >
                   <button onClick={togglePlay}>
                     {playing ? (
                       <Pause size={16} className="text-white" />
@@ -105,23 +127,34 @@ export default function VideoSection({ t }: VideoSectionProps) {
                       <Volume2 size={16} className="text-white" />
                     )}
                   </button>
+
+                  {/* FULLSCREEN */}
+                  <button onClick={toggleFullscreen}>
+                    <Maximize size={16} className="text-white" />
+                  </button>
                 </div>
 
                 {/* ARROWS */}
                 <button
                   onClick={prevVideo}
-                  className="absolute left-3 top-1/2 -translate-y-1/2
-                  w-10 h-10 rounded-full bg-white/80 backdrop-blur
-                  flex items-center justify-center shadow hover:bg-white transition"
+                  className="
+                    absolute left-3 top-1/2 -translate-y-1/2
+                    w-10 h-10 rounded-full bg-white/80 backdrop-blur
+                    flex items-center justify-center
+                    shadow hover:bg-white transition
+                  "
                 >
                   <span className="text-[#003B4A] text-xl">‹</span>
                 </button>
 
                 <button
                   onClick={nextVideo}
-                  className="absolute right-3 top-1/2 -translate-y-1/2
-                  w-10 h-10 rounded-full bg-white/80 backdrop-blur
-                  flex items-center justify-center shadow hover:bg-white transition"
+                  className="
+                    absolute right-3 top-1/2 -translate-y-1/2
+                    w-10 h-10 rounded-full bg-white/80 backdrop-blur
+                    flex items-center justify-center
+                    shadow hover:bg-white transition
+                  "
                 >
                   <span className="text-[#003B4A] text-xl">›</span>
                 </button>
