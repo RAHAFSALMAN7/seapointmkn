@@ -28,10 +28,10 @@ function App() {
       <ProjectVideoGallery t={t} />
       {/* VIRTUAL TOUR */}
       <VirtualTour t={t} />
- 
+
       {/* SMART HOME VIDEO SECTION */}
       <VideoSection t={t} />
-<VirtualSellerCentered/>
+      <VirtualSellerCentered />
 
 
       {/* GALLERY (Show Apartment + Services) */}

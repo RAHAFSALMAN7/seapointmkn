@@ -16,6 +16,56 @@ export default function Footer({ t }: FooterProps) {
 
   return (
     <>
+      {/* ===== OUR WORK SECTION ===== */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+
+          <h2 className="text-4xl md:text-5xl font-bold text-[#003B4A] mb-6">
+            {t.ourWork.title}
+          </h2>
+
+          <div className="w-24 h-1 bg-[#D9C18E] mx-auto mb-12" />
+
+          <div className="flex flex-col md:flex-row justify-center gap-6">
+
+            <a
+              href="https://drive.google.com/file/d/1zFhpucdcpBh7DBNY8atZBn9d2MhcaAPZ/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                px-10 py-4
+                bg-[#003B4A]
+                text-white
+                rounded-full
+                text-lg font-semibold
+                hover:bg-[#002d38]
+                transition-colors
+              "
+            >
+              {t.ourWork.downloads.first}
+            </a>
+
+            <a
+              href="https://drive.google.com/file/d/1oyDYSC1ZwVEx1NZ-VDKr89tRbwEud12N/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                px-10 py-4
+                bg-[#D9C18E]
+                text-[#003B4A]
+                rounded-full
+                text-lg font-semibold
+                hover:bg-[#c4a76d]
+                transition-colors
+              "
+            >
+              {t.ourWork.downloads.second}
+            </a>
+
+          </div>
+        </div>
+      </section>
+
       {/* ===== PARTNERS SECTION ===== */}
       <section className="py-20 bg-[#f8f6f3]">
         <div className="max-w-7xl mx-auto px-4 text-center">

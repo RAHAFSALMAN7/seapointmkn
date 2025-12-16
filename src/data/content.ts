@@ -141,21 +141,28 @@ export const content = {
       message: 'رسالتك',
       send: 'إرسال'
     },
+    ourWork: {
+      title: 'من أعمالنا',
+      downloads: {
+        first: 'mkn2025-2026',
+        second: 'Sea-Point-Profile'
+      }
+    },
 
     partners: {
       title: 'شركاء النجاح'
     },
 
     footer: {
-  description: 'سي بوينت — نبني مستقبل السكن الفاخر في المملكة العربية السعودية',
-  quickLinks: 'روابط سريعة',
-  links: ['المشروع', 'المميزات', 'المعرض', 'من نحن'],
-  contact: 'تواصل معنا',
-  location: 'المملكة العربية السعودية',
-  locationDetail: 'الخبر – المنطقة الشرقية',
-  copyright:
-    '© 2025 سي بوينت للتطوير العقاري. جميع الحقوق محفوظة'
-}
+      description: 'سي بوينت — نبني مستقبل السكن الفاخر في المملكة العربية السعودية',
+      quickLinks: 'روابط سريعة',
+      links: ['المشروع', 'المميزات', 'المعرض', 'من نحن'],
+      contact: 'تواصل معنا',
+      location: 'المملكة العربية السعودية',
+      locationDetail: 'الخبر – المنطقة الشرقية',
+      copyright:
+        '© 2025 سي بوينت للتطوير العقاري. جميع الحقوق محفوظة'
+    }
 
   },
 
@@ -300,6 +307,13 @@ export const content = {
       email: 'Email Address',
       message: 'Your Message',
       send: 'Send'
+    },
+    ourWork: {
+      title: 'Our Work',
+      downloads: {
+        first: 'mkn2025-2026',
+        second: 'Sea-Point-Profile'
+      }
     },
 
     partners: {
