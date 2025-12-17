@@ -27,8 +27,7 @@ export default function Gallery({ t }: GalleryProps) {
      "/11seapoint.jpg",
     "/12seapoint.jpg",
     "/13seapoint.jpg",
-    "/14seapoint.jpg",
-  ];
+   ];
 
   /* 🛎️ صور الخدمات */
   const servicesImages = [
