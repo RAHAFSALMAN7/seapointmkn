@@ -1,4 +1,4 @@
-import { Phone } from "lucide-react";
+import { Phone, Instagram, Twitter, Linkedin } from "lucide-react";
 
 interface FooterProps {
   t: any;
@@ -19,7 +19,6 @@ export default function Footer({ t }: FooterProps) {
       {/* ===== OUR WORK SECTION ===== */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 text-center">
-
           <h2 className="text-4xl md:text-5xl font-bold text-[#003B4A] mb-6">
             {t.ourWork.title}
           </h2>
@@ -27,20 +26,11 @@ export default function Footer({ t }: FooterProps) {
           <div className="w-24 h-1 bg-[#D9C18E] mx-auto mb-12" />
 
           <div className="flex flex-col md:flex-row justify-center gap-6">
-
             <a
               href="https://drive.google.com/file/d/1zFhpucdcpBh7DBNY8atZBn9d2MhcaAPZ/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
-              className="
-                px-10 py-4
-                bg-[#003B4A]
-                text-white
-                rounded-full
-                text-lg font-semibold
-                hover:bg-[#002d38]
-                transition-colors
-              "
+              className="px-10 py-4 bg-[#003B4A] text-white rounded-full text-lg font-semibold hover:bg-[#002d38] transition-colors"
             >
               {t.ourWork.downloads.first}
             </a>
@@ -49,19 +39,10 @@ export default function Footer({ t }: FooterProps) {
               href="https://drive.google.com/file/d/1oyDYSC1ZwVEx1NZ-VDKr89tRbwEud12N/view?usp=drive_link"
               target="_blank"
               rel="noopener noreferrer"
-              className="
-                px-10 py-4
-                bg-[#D9C18E]
-                text-[#003B4A]
-                rounded-full
-                text-lg font-semibold
-                hover:bg-[#c4a76d]
-                transition-colors
-              "
+              className="px-10 py-4 bg-[#D9C18E] text-[#003B4A] rounded-full text-lg font-semibold hover:bg-[#c4a76d] transition-colors"
             >
               {t.ourWork.downloads.second}
             </a>
-
           </div>
         </div>
       </section>
@@ -69,7 +50,6 @@ export default function Footer({ t }: FooterProps) {
       {/* ===== PARTNERS SECTION ===== */}
       <section className="py-20 bg-[#f8f6f3]">
         <div className="max-w-7xl mx-auto px-4 text-center">
-
           <h2 className="text-4xl md:text-5xl font-bold text-[#003B4A] mb-6">
             {t.partners.title}
           </h2>
@@ -80,15 +60,7 @@ export default function Footer({ t }: FooterProps) {
             {partners.map((img, index) => (
               <div
                 key={index}
-                className="
-                  w-28 h-28 md:w-32 md:h-32
-                  rounded-full bg-white
-                  flex items-center justify-center
-                  shadow-lg
-                  overflow-hidden
-                  transition-transform duration-300
-                  hover:scale-110
-                "
+                className="w-28 h-28 md:w-32 md:h-32 rounded-full bg-white flex items-center justify-center shadow-lg overflow-hidden transition-transform duration-300 hover:scale-110"
               >
                 <img
                   src={img}
@@ -104,9 +76,7 @@ export default function Footer({ t }: FooterProps) {
       {/* ===== FOOTER ===== */}
       <footer className="bg-[#f8f6f3] text-[#003B4A] py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
           <div className="grid md:grid-cols-4 gap-12 mb-12">
-
             {/* LOGO & DESCRIPTION */}
             <div className="md:col-span-2">
               <img
@@ -119,15 +89,35 @@ export default function Footer({ t }: FooterProps) {
                 {t.footer.description}
               </p>
 
+              {/* SOCIAL ICONS */}
               <div className="flex gap-4">
-                {["X", "IN", "IG"].map((icon) => (
-                  <div
-                    key={icon}
-                    className="w-12 h-12 bg-[#D9C18E] rounded-full flex items-center justify-center hover:bg-[#c4a76d] transition-colors cursor-pointer"
-                  >
-                    <span className="text-[#003B4A] font-bold">{icon}</span>
-                  </div>
-                ))}
+                {/* X */}
+                <a
+                  href="https://x.com/ijhpacm2pauefck"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-[#D9C18E] rounded-full flex items-center justify-center hover:bg-[#c4a76d] transition-colors"
+                >
+                  <Twitter size={22} className="text-[#003B4A]" />
+                </a>
+
+                {/* LinkedIn (placeholder) */}
+                <a
+                  href="#"
+                  className="w-12 h-12 bg-[#D9C18E] rounded-full flex items-center justify-center hover:bg-[#c4a76d] transition-colors"
+                >
+                  <Linkedin size={22} className="text-[#003B4A]" />
+                </a>
+
+                {/* Instagram */}
+                <a
+                  href="https://www.instagram.com/p/DRQoc5vACqT/?igsh=MXV1YXhjYTkwd3Q3YQ=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-[#D9C18E] rounded-full flex items-center justify-center hover:bg-[#c4a76d] transition-colors"
+                >
+                  <Instagram size={22} className="text-[#003B4A]" />
+                </a>
               </div>
             </div>
 
@@ -188,13 +178,11 @@ export default function Footer({ t }: FooterProps) {
                 <p>sales@mkn-sa.com</p>
               </div>
             </div>
-
           </div>
 
           <div className="border-t border-[#003B4A]/10 pt-8 text-center text-[#003B4A]/50">
             {t.footer.copyright}
           </div>
-
         </div>
       </footer>
     </>

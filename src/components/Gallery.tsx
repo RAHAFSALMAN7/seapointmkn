@@ -11,7 +11,7 @@ interface GalleryProps {
 }
 
 export default function Gallery({ t }: GalleryProps) {
-  // 🛑 Guard مهم جدًا
+  // 🛑 Guard مهم
   if (!t?.gallery?.sections) return null;
 
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -68,12 +68,9 @@ export default function Gallery({ t }: GalleryProps) {
       <Swiper
         modules={[Pagination, Navigation]}
         centeredSlides
-        loop
+        loop={false}
         speed={900}
-        slidesPerGroup={1}
-        watchSlidesProgress
         grabCursor
-        initialSlide={1}
         navigation
         pagination={{ clickable: true }}
         spaceBetween={40}
@@ -89,6 +86,9 @@ export default function Gallery({ t }: GalleryProps) {
               <img
                 src={image}
                 alt={`${title} ${index + 1}`}
+                loading={index === 0 ? "eager" : "lazy"}
+                decoding="async"
+                className="gallery-img"
                 onClick={() => {
                   setLightboxImage(image);
                   setLightboxOpen(true);
@@ -102,13 +102,11 @@ export default function Gallery({ t }: GalleryProps) {
   );
 
   return (
-    // ✅ هذا هو التعديل المهم
     <section
       id="gallery"
       className="py-24 md:py-32 bg-gradient-to-br from-[#003B4A] to-[#004B5A] overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4">
-
         {/* MAIN TITLE */}
         <div className="text-center mb-24">
           <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
@@ -142,12 +140,14 @@ export default function Gallery({ t }: GalleryProps) {
         >
           <img
             src={lightboxImage}
+            alt="Gallery Preview"
+            decoding="async"
             className="max-w-full max-h-[90vh] rounded-2xl shadow-2xl"
           />
         </div>
       )}
 
-      {/* ===== GALLERY STYLES ===== */}
+      {/* ===== STYLES ===== */}
       <style>{`
         .gallery-swiper {
           padding-top: 30px;
@@ -161,19 +161,16 @@ export default function Gallery({ t }: GalleryProps) {
           opacity: 0.5;
           display: flex;
           justify-content: center;
-          transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-                      opacity 0.6s ease;
+          transition: transform 0.8s ease, opacity 0.6s ease;
         }
 
-        .gallery-slide img {
+        .gallery-img {
           width: 100%;
           height: 420px;
           object-fit: cover;
           border-radius: 22px;
           box-shadow: 0 20px 40px rgba(0,0,0,0.35);
           cursor: pointer;
-          transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-                      box-shadow 0.6s ease;
         }
 
         .swiper-slide-active .gallery-slide {
@@ -182,13 +179,8 @@ export default function Gallery({ t }: GalleryProps) {
           z-index: 10;
         }
 
-        .swiper-slide-active img {
-          box-shadow: 0 30px 80px rgba(203,178,121,0.55);
-        }
-
         .swiper-pagination-bullet {
           background: #ffffff80;
-          opacity: 1;
         }
 
         .swiper-pagination-bullet-active {
@@ -201,13 +193,9 @@ export default function Gallery({ t }: GalleryProps) {
             opacity: 1;
           }
 
-          .gallery-slide img {
+          .gallery-img {
             height: auto;
             aspect-ratio: 4 / 3;
-          }
-
-          .swiper-slide-active .gallery-slide {
-            transform: scale(1);
           }
         }
       `}</style>
