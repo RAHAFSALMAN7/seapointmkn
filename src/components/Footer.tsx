@@ -141,8 +141,8 @@ export default function Footer({ t }: FooterProps) {
                         isGallery
                           ? "#gallery"
                           : isAbout
-                          ? "https://www.mkn-sa.net/"
-                          : "#"
+                            ? "https://www.mkn-sa.net/"
+                            : "#"
                       }
                       target={isAbout ? "_blank" : "_self"}
                       rel={isAbout ? "noopener noreferrer" : undefined}

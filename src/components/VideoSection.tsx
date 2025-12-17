@@ -5,6 +5,8 @@ import {
   Volume2,
   VolumeX,
   Maximize,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 interface Video {
@@ -42,14 +44,22 @@ export default function VideoSection({ t }: VideoSectionProps) {
     setMuted(!muted);
   };
 
+  // ✅ FULLSCREEN (Desktop + Mobile)
   const toggleFullscreen = () => {
-    const video = videoRef.current;
+    const video = videoRef.current as any;
     if (!video) return;
 
+    // iOS (Safari)
+    if (video.webkitEnterFullscreen) {
+      video.webkitEnterFullscreen();
+      return;
+    }
+
+    // Standard browsers (Desktop / Android Chrome)
     if (!document.fullscreenElement) {
-      video.requestFullscreen();
+      video.requestFullscreen?.();
     } else {
-      document.exitFullscreen();
+      document.exitFullscreen?.();
     }
   };
 
@@ -105,6 +115,7 @@ export default function VideoSection({ t }: VideoSectionProps) {
 
                 {/* CONTROLS */}
                 <div
+                  dir="ltr"
                   className="
                     absolute bottom-4 left-1/2 -translate-x-1/2
                     bg-black/40 backdrop-blur-lg
@@ -134,9 +145,10 @@ export default function VideoSection({ t }: VideoSectionProps) {
                   </button>
                 </div>
 
-                {/* ARROWS */}
+                {/* PREV */}
                 <button
                   onClick={prevVideo}
+                  dir="ltr"
                   className="
                     absolute left-3 top-1/2 -translate-y-1/2
                     w-10 h-10 rounded-full bg-white/80 backdrop-blur
@@ -144,11 +156,13 @@ export default function VideoSection({ t }: VideoSectionProps) {
                     shadow hover:bg-white transition
                   "
                 >
-                  <span className="text-[#003B4A] text-xl">‹</span>
+                  <ChevronLeft size={22} className="text-[#003B4A]" />
                 </button>
 
+                {/* NEXT */}
                 <button
                   onClick={nextVideo}
+                  dir="ltr"
                   className="
                     absolute right-3 top-1/2 -translate-y-1/2
                     w-10 h-10 rounded-full bg-white/80 backdrop-blur
@@ -156,12 +170,13 @@ export default function VideoSection({ t }: VideoSectionProps) {
                     shadow hover:bg-white transition
                   "
                 >
-                  <span className="text-[#003B4A] text-xl">›</span>
+                  <ChevronRight size={22} className="text-[#003B4A]" />
                 </button>
+
               </div>
 
               {/* DOTS */}
-              <div className="flex justify-center gap-3 mt-6">
+              <div dir="ltr" className="flex justify-center gap-3 mt-6">
                 {t.smartHomeSection.videos.map((_, index) => (
                   <button
                     key={index}
@@ -169,10 +184,11 @@ export default function VideoSection({ t }: VideoSectionProps) {
                       setCurrentIndex(index);
                       setPlaying(true);
                     }}
-                    className={`w-2.5 h-2.5 rounded-full transition ${currentIndex === index
-                      ? "bg-[#D9C18E] shadow-[0_0_10px_#D9C18E]"
-                      : "bg-[#003B4A]/30 hover:bg-[#003B4A]/50"
-                      }`}
+                    className={`w-2.5 h-2.5 rounded-full transition ${
+                      currentIndex === index
+                        ? "bg-[#D9C18E] shadow-[0_0_10px_#D9C18E]"
+                        : "bg-[#003B4A]/30 hover:bg-[#003B4A]/50"
+                    }`}
                   />
                 ))}
               </div>

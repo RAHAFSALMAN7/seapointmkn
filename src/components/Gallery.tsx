@@ -24,11 +24,7 @@ export default function Gallery({ t }: GalleryProps) {
     "/3seapoint.jpg",
     "/4seapoint.jpg",
     "/6seapoint.jpg",
-    "/7seapoint.jpg",
-    "/8seapoint.jpg",
-    "/9seapoint.jpg",
-    "/10seapoint.jpg",
-    "/11seapoint.jpg",
+     "/11seapoint.jpg",
     "/12seapoint.jpg",
     "/13seapoint.jpg",
     "/14seapoint.jpg",
@@ -42,6 +38,11 @@ export default function Gallery({ t }: GalleryProps) {
     "/services4.jpg",
     "/services5.jpg",
     "/services6.jpg",
+    "/services7.jpg",
+    "/services8.jpg",
+    "/services9.jpg",
+    "/services10.jpg",
+
   ];
 
   const GallerySection = ({
