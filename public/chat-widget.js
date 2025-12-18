@@ -56,7 +56,7 @@ var ChatWidget = (() => {
               animations: !0,
               branding: null,
               responseAccessor: "reply",
-              elevenlabsAgentId: "agent_8501kbyyf7enfex955fdpwakajaj",
+              elevenlabsAgentId: "agent_8901kcr7zm7zfc4apfx49wfam89j",
               elevenlabsApiKey: "sk_02cc7992a735fb48f4d296d5800efffe36e1e7e93d9fb45f",
               callButtonEnabled: 1,
             },
