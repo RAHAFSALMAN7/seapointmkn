@@ -1,57 +1,104 @@
-import { useEffect } from "react";
+import { useState } from "react";
+import VideoSection from "./components/VideoSection";
+import Hero from "./components/Hero";
+import VirtualTour from "./components/VirtualTour";
+import Gallery from "./components/Gallery";
+import Features from "./components/Features";
+import CTA from "./components/CTA";
+import Footer from "./components/Footer";
+import ProjectVideoGallery from "./components/ProjectVideoGallery";
 
-export default function VirtualSellerCentered() {
-  useEffect(() => {
-    const host = "https://labs.heygen.com";
-    const url =
-      host +
-      "/guest/streaming-embed?share=eyJxdWFsaXR5IjoiaGlnaCIsImF2YXRhck5hbWUiOiI3NmQ4MTEyNjVjOWU0MTY4YTJlNjAxOTZjY2FlZDE5YSIsInByZXZpZXdJbWciOiJodHRwczovL2ZpbGVzMi5oZXlnZW4uYWkvYXZhdGFyL3YzLzc2ZDgxMTI2NWM5ZTQxNjhhMmU2MDE5NmNjYWVkMTlhL2Z1bGwvMi4yL3ByZXZpZXdfdGFyZ2V0LndlYnAiLCJuZWVkUmVtb3ZlQmFja2dyb3VuZCI6ZmFsc2UsImtub3dsZWRnZUJhc2VJZCI6IjJhNTgzMTM1OGRlZTQ3NjBhZThkNGRjODM1N2RmN2Y0IiwidXNlcm5hbWUiOiI1Y2EwMTNhYmU3OWI0MmU0OTVhODA0NzUyODllMGJkNyJ9&inIFrame=1";
+import { content } from "./data/content";
+import VirtualSellerCentered from "./components/VirtualSeller";
 
-    const container = document.getElementById("heygen-centered-container");
-    if (!container) return;
+function App() {
+  const [language, setLanguage] = useState<"ar" | "en">("ar");
 
-    const iframe = document.createElement("iframe");
-    iframe.src = url;
-    iframe.allow = "microphone";
-    iframe.title = "HeyGen Virtual Seller";
-    iframe.style.width = "100%";
-    iframe.style.height = "100%";
-    iframe.style.border = "0";
-
-    container.appendChild(iframe);
-
-    return () => {
-      container.innerHTML = "";
-    };
-  }, []);
+  const t = content[language];
 
   return (
-    <section className="py-32 bg-gradient-to-br from-[#f8f6f3] to-white relative overflow-hidden">
-      {/* خط علوي ذهبي */}
-      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#D9C18E] via-[#c4a76d] to-[#D9C18E]" />
+    <div
+      className="min-h-screen bg-white"
+      dir={language === "ar" ? "rtl" : "ltr"}
+    >
+      {/* HERO */}
+      <Hero t={t} language={language} setLanguage={setLanguage} />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center animate-fade-in-up">
-        <div className="relative group w-full">
-          {/* التوهج الخلفي */}
-          <div
-            className="absolute -inset-4 bg-gradient-to-br from-[#003B4A] to-[#004B5A]
-                       rounded-3xl blur opacity-30 group-hover:opacity-50
-                       transition duration-500"
-          />
+      {/* INTERIOR / PROJECT VIDEOS */}
+      <ProjectVideoGallery t={t} />
 
-          {/* إطار الفيديو */}
-          <div
-            className="relative bg-gradient-to-br from-[#003B4A] to-[#004B5A]
-                       rounded-3xl p-4 shadow-2xl"
-          >
-            <div
-              id="heygen-centered-container"
-              className="rounded-2xl overflow-hidden shadow-xl border border-[#D9C18E]/40 w-full"
-              style={{ aspectRatio: "16 / 9" }}
-            />
-          </div>
-        </div>
-      </div>
-    </section>
+      {/* VIRTUAL TOUR */}
+      <VirtualTour t={t} />
+
+      {/* SMART HOME VIDEO SECTION */}
+      <VideoSection t={t} />
+
+      {/* HEYGEN VIRTUAL SELLER (FLOATING) */}
+      <VirtualSellerCentered />
+
+      {/* GALLERY */}
+      <Gallery t={t} />
+
+      {/* PRICING / FEATURES */}
+      <Features t={t} />
+
+      {/* CTA */}
+      <CTA t={t} />
+
+      {/* FOOTER */}
+      <Footer t={t} />
+
+      {/* GLOBAL ANIMATIONS */}
+      <style>{`
+        @keyframes fade-in-down {
+          from { opacity: 0; transform: translateY(-30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fade-in-up {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fade-in-up-delay {
+          from { opacity: 0; transform: translateY(40px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fade-in-left {
+          from { opacity: 0; transform: translateX(-40px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fade-in-right {
+          from { opacity: 0; transform: translateX(40px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes bounce-slow {
+          0%, 100% { transform: translateY(0) translateX(-50%); }
+          50% { transform: translateY(-20px) translateX(-50%); }
+        }
+
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-20px); }
+        }
+
+        .animate-fade-in-down { animation: fade-in-down 1s ease-out; }
+        .animate-fade-in-up { animation: fade-in-up 1s ease-out; }
+        .animate-fade-in-up-delay { animation: fade-in-up-delay 1.2s ease-out; }
+        .animate-fade-in-left { animation: fade-in-left 1s ease-out; }
+        .animate-fade-in-right { animation: fade-in-right 1s ease-out; }
+
+        .animate-bounce-slow { animation: bounce-slow 3s ease-in-out infinite; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        html { scroll-behavior: smooth; }
+      `}</style>
+    </div>
   );
 }
+
+export default App;
