@@ -11,18 +11,22 @@ import {
  * Cloudinary video URLs
  */
 const videos = [
-  // 1️⃣ SEAPOINTPROJECT (الأول)
-  "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765885001/SEAPOINTPROJECT_oxzxlr.mp4",
+  // 1️⃣ SEAPOINTPROJECT
+  " https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765884844/video_MKN_k0ru3i.mp4",
 
   // 2️⃣ video_MKN
-  "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765884844/video_MKN_k0ru3i.mp4",
-
+  "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765885001/SEAPOINTPROJECT_oxzxlr.mp4",
+ 
   // 3️⃣ video
   "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765884954/video_pw2ppx.mp4",
 
   // 4️⃣ SEAPOINT
   "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765885043/SEAPOINT_o5euuq.mp4",
 ];
+
+// فيديو مستقل فوق المعرض
+const featuredVideo =
+  "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765885001/SEAPOINTPROJECT_oxzxlr.mp4";
 
 interface ProjectVideoGalleryProps {
   t: {
@@ -81,10 +85,20 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
     setMuted(!muted);
   };
 
+  // ✅ Fullscreen يعمل على الموبايل (iOS + Android)
   const toggleFullscreen = () => {
     const video = centerRef.current;
     if (!video) return;
 
+    // iOS Safari
+    // @ts-ignore
+    if (video.webkitEnterFullscreen) {
+      // @ts-ignore
+      video.webkitEnterFullscreen();
+      return;
+    }
+
+    // Browsers الأخرى
     if (!document.fullscreenElement) {
       video.requestFullscreen();
     } else {
@@ -116,12 +130,24 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
           </p>
         </div>
 
-        {/* SLIDER (direction fixed) */}
+        {/* ================= FEATURED VIDEO ================= */}
+        <div className="max-w-5xl mx-auto mb-24">
+          <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl">
+            <video
+              src={featuredVideo}
+              controls
+              playsInline
+              preload="metadata"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+
+        {/* ================= SLIDER ================= */}
         <div
           className="relative flex items-center justify-center gap-6 md:gap-12"
           style={{ direction: "ltr" }}
         >
-
           {/* LEFT PREVIEW */}
           <video
             src={videos[getIndex(-1)]}
@@ -162,17 +188,23 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
                 object-cover
                 rounded-3xl shadow-2xl
                 transition-all duration-300 ease-in-out
-                ${isTransitioning ? "opacity-0 scale-95" : "opacity-100 scale-100"}
+                ${
+                  isTransitioning
+                    ? "opacity-0 scale-95"
+                    : "opacity-100 scale-100"
+                }
               `}
             />
 
             {/* CONTROLS */}
-            <div className="
+            <div
+              className="
               absolute bottom-3 left-3 right-3
               flex items-center gap-3
               bg-black/50 backdrop-blur
               rounded-xl px-3 py-2
-            ">
+            "
+            >
               <button onClick={togglePlay}>
                 {playing ? (
                   <Pause size={18} className="text-white" />
@@ -222,12 +254,12 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
             "
           />
 
-          {/* LEFT ARROW (always left) */}
+          {/* LEFT ARROW */}
           <button
             onClick={prev}
             className="
               absolute left-2 md:left-10
-              bottom-1/2 translate-y-1/2
+              bottom-1/2 -translate-y-1/2
               z-20
               w-10 h-10 md:w-12 md:h-12
               rounded-full bg-white/90
@@ -239,12 +271,12 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
             <span className="text-2xl text-[#003B4A]">‹</span>
           </button>
 
-          {/* RIGHT ARROW (always right) */}
+          {/* RIGHT ARROW */}
           <button
             onClick={next}
             className="
               absolute right-2 md:right-10
-              bottom-1/2 translate-y-1/2
+              bottom-1/2 -translate-y-1/2
               z-20
               w-10 h-10 md:w-12 md:h-12
               rounded-full bg-white/90
@@ -255,7 +287,6 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
           >
             <span className="text-2xl text-[#003B4A]">›</span>
           </button>
-
         </div>
       </div>
     </section>
