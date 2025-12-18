@@ -5,18 +5,20 @@ import {
   Volume2,
   VolumeX,
   Maximize,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 /**
  * Cloudinary video URLs
  */
 const videos = [
-  // 1️⃣ SEAPOINTPROJECT
-  " https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765884844/video_MKN_k0ru3i.mp4",
+  // 1️⃣ video_MKN
+  "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765884844/video_MKN_k0ru3i.mp4",
 
-  // 2️⃣ video_MKN
+  // 2️⃣ SEAPOINTPROJECT
   "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765885001/SEAPOINTPROJECT_oxzxlr.mp4",
- 
+
   // 3️⃣ video
   "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765884954/video_pw2ppx.mp4",
 
@@ -67,7 +69,7 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
   useEffect(() => {
     if (centerRef.current) {
       centerRef.current.currentTime = 0;
-      centerRef.current.play().catch(() => {});
+      centerRef.current.play().catch(() => { });
       setPlaying(true);
       setProgress(0);
     }
@@ -130,7 +132,7 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
           </p>
         </div>
 
-        {/* ================= FEATURED VIDEO ================= */}
+        {/* FEATURED VIDEO */}
         <div className="max-w-5xl mx-auto mb-24">
           <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl">
             <video
@@ -143,7 +145,7 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
           </div>
         </div>
 
-        {/* ================= SLIDER ================= */}
+        {/* SLIDER */}
         <div
           className="relative flex items-center justify-center gap-6 md:gap-12"
           style={{ direction: "ltr" }}
@@ -188,10 +190,9 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
                 object-cover
                 rounded-3xl shadow-2xl
                 transition-all duration-300 ease-in-out
-                ${
-                  isTransitioning
-                    ? "opacity-0 scale-95"
-                    : "opacity-100 scale-100"
+                ${isTransitioning
+                  ? "opacity-0 scale-95"
+                  : "opacity-100 scale-100"
                 }
               `}
             />
@@ -259,16 +260,17 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
             onClick={prev}
             className="
               absolute left-2 md:left-10
-              bottom-1/2 -translate-y-1/2
+              top-1/2 -translate-y-1/2
               z-20
               w-10 h-10 md:w-12 md:h-12
               rounded-full bg-white/90
               backdrop-blur
               flex items-center justify-center
               shadow-lg
+              hover:scale-105 transition
             "
           >
-            <span className="text-2xl text-[#003B4A]">‹</span>
+            <ChevronLeft className="w-6 h-6 text-[#003B4A]" />
           </button>
 
           {/* RIGHT ARROW */}
@@ -276,16 +278,17 @@ export default function ProjectVideoGallery({ t }: ProjectVideoGalleryProps) {
             onClick={next}
             className="
               absolute right-2 md:right-10
-              bottom-1/2 -translate-y-1/2
+              top-1/2 -translate-y-1/2
               z-20
               w-10 h-10 md:w-12 md:h-12
               rounded-full bg-white/90
               backdrop-blur
               flex items-center justify-center
               shadow-lg
+              hover:scale-105 transition
             "
           >
-            <span className="text-2xl text-[#003B4A]">›</span>
+            <ChevronRight className="w-6 h-6 text-[#003B4A]" />
           </button>
         </div>
       </div>
