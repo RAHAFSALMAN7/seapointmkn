@@ -1,102 +1,103 @@
-import { useState } from "react";
-import VideoSection from "./components/VideoSection";
-import Hero from "./components/Hero";
-import VirtualTour from "./components/VirtualTour";
-import Gallery from "./components/Gallery";
-import Features from "./components/Features";
-import CTA from "./components/CTA";
-import Footer from "./components/Footer";
-import ProjectVideoGallery from "./components/ProjectVideoGallery";
+import { useEffect } from "react";
 
-import { content } from "./data/content";
-import VirtualSellerCentered from "./components/VirtualSeller";
+export default function VirtualSellerCentered() {
+  useEffect(() => {
+    const script = document.createElement("script");
 
-function App() {
-  const [language, setLanguage] = useState<"ar" | "en">("ar");
+    script.innerHTML = `
+      !function(window){
+        const host="https://labs.heygen.com",
+        url=host+"/guest/streaming-embed?share=eyJxdWFsaXR5IjoiaGlnaCIsImF2YXRhck5hbWUiOiI3NmQ4MTEyNjVjOWU0MTY4YTJlNjAxOTZjY2FlZDE5YSIsInByZXZpZXdJbWciOiJodHRwczovL2ZpbGVzMi5oZXlnZW4uYWkvYXZhdGFyL3YzLzc2ZDgxMTI2NWM5ZTQxNjhhMmU2MDE5NmNjYWVkMTlhL2Z1bGwvMi4yL3ByZXZpZXdfdGFyZ2V0LndlYnAiLCJuZWVkUmVtb3ZlQmFja2dyb3VuZCI6ZmFsc2UsImtub3dsZWRnZUJhc2VJZCI6IjJhNTgzMTM1OGRlZTQ3NjBhZThkNGRjODM1N2RmN2Y0IiwidXNlcm5hbWUiOiI1Y2EwMTNhYmU3OWI0MmU0OTVhODA0NzUyODllMGJkNyJ9&inIFrame=1",
+        clientWidth=document.body.clientWidth,
+        wrapDiv=document.createElement("div");
 
-  const t = content[language];
+        wrapDiv.id="heygen-streaming-embed";
 
-  return (
-    <div
-      className="min-h-screen bg-white"
-      dir={language === "ar" ? "rtl" : "ltr"}
-    >
-      {/* HERO */}
-      <Hero t={t} language={language} setLanguage={setLanguage} />
+        const container=document.createElement("div");
+        container.id="heygen-streaming-container";
 
-      {/* INTERIOR / PROJECT VIDEOS */}
-      <ProjectVideoGallery t={t} />
-      {/* VIRTUAL TOUR */}
-      <VirtualTour t={t} />
+        const stylesheet=document.createElement("style");
+        stylesheet.innerHTML=\`
+          #heygen-streaming-embed {
+            z-index: 9999;
+            position: fixed;
+            left: 40px;
+            bottom: 40px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0px 8px 24px rgba(0,0,0,0.12);
+            transition: all linear 0.1s;
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+          }
 
-      {/* SMART HOME VIDEO SECTION */}
-      <VideoSection t={t} />
-      <VirtualSellerCentered />
+          #heygen-streaming-embed.show {
+            opacity: 1;
+            visibility: visible;
+          }
 
+          #heygen-streaming-embed.expand {
+            \${clientWidth<540
+              ? "height:266px;width:96%;left:50%;transform:translateX(-50%);"
+              : "height:366px;width:calc(366px * 16 / 9);"}
+            border: 0;
+            border-radius: 8px;
+          }
 
-      {/* GALLERY (Show Apartment + Services) */}
-      <Gallery t={t} />
+          #heygen-streaming-container,
+          #heygen-streaming-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+          }
+        \`;
 
-      {/* PRICING / FEATURES */}
-      <Features t={t} />
+        const iframe=document.createElement("iframe");
+        iframe.allowFullscreen=false;
+        iframe.title="Streaming Embed";
+        iframe.role="dialog";
+        iframe.allow="microphone";
+        iframe.src=url;
 
-      {/* CTA */}
-      <CTA t={t} />
+        let visible=false, initial=false;
 
-      {/* FOOTER */}
-      <Footer t={t} />
+        window.addEventListener("message",(e)=>{
+          if(e.origin!==host) return;
+          if(!e.data||e.data.type!=="streaming-embed") return;
 
-      {/* GLOBAL ANIMATIONS */}
-      <style>{`
-        @keyframes fade-in-down {
-          from { opacity: 0; transform: translateY(-30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
+          if(e.data.action==="init"){
+            initial=true;
+            wrapDiv.classList.toggle("show",initial);
+          }
 
-        @keyframes fade-in-up {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
+          if(e.data.action==="show"){
+            visible=true;
+            wrapDiv.classList.toggle("expand",visible);
+          }
 
-        @keyframes fade-in-up-delay {
-          from { opacity: 0; transform: translateY(40px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
+          if(e.data.action==="hide"){
+            visible=false;
+            wrapDiv.classList.toggle("expand",visible);
+          }
+        });
 
-        @keyframes fade-in-left {
-          from { opacity: 0; transform: translateX(-40px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
+        container.appendChild(iframe);
+        wrapDiv.appendChild(stylesheet);
+        wrapDiv.appendChild(container);
+        document.body.appendChild(wrapDiv);
+      }(globalThis);
+    `;
 
-        @keyframes fade-in-right {
-          from { opacity: 0; transform: translateX(40px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
+    document.body.appendChild(script);
 
-        @keyframes bounce-slow {
-          0%, 100% { transform: translateY(0) translateX(-50%); }
-          50% { transform: translateY(-20px) translateX(-50%); }
-        }
+    return () => {
+      document.getElementById("heygen-streaming-embed")?.remove();
+      script.remove();
+    };
+  }, []);
 
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-20px); }
-        }
-
-        .animate-fade-in-down { animation: fade-in-down 1s ease-out; }
-        .animate-fade-in-up { animation: fade-in-up 1s ease-out; }
-        .animate-fade-in-up-delay { animation: fade-in-up-delay 1.2s ease-out; }
-        .animate-fade-in-left { animation: fade-in-left 1s ease-out; }
-        .animate-fade-in-right { animation: fade-in-right 1s ease-out; }
-
-        .animate-bounce-slow { animation: bounce-slow 3s ease-in-out infinite; }
-        .animate-float { animation: float 6s ease-in-out infinite; }
-
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        html { scroll-behavior: smooth; }
-      `}</style>
-    </div>
-  );
+  return null;
 }
-
-export default App;
