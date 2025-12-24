@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   Play,
   Pause,
@@ -32,11 +32,12 @@ export default function VideoSection({ t }: VideoSectionProps) {
   const [playing, setPlaying] = useState(true);
   const [muted, setMuted] = useState(true);
 
-  const togglePlay = () => {
+  useEffect(() => {
     if (!videoRef.current) return;
-    playing ? videoRef.current.pause() : videoRef.current.play();
-    setPlaying(!playing);
-  };
+    playing ? videoRef.current.play() : videoRef.current.pause();
+  }, [playing, currentIndex]);
+
+  const togglePlay = () => setPlaying((p) => !p);
 
   const toggleMute = () => {
     if (!videoRef.current) return;
@@ -44,18 +45,15 @@ export default function VideoSection({ t }: VideoSectionProps) {
     setMuted(!muted);
   };
 
-  // ✅ FULLSCREEN (Desktop + Mobile)
   const toggleFullscreen = () => {
     const video = videoRef.current as any;
     if (!video) return;
 
-    // iOS (Safari)
     if (video.webkitEnterFullscreen) {
       video.webkitEnterFullscreen();
       return;
     }
 
-    // Standard browsers (Desktop / Android Chrome)
     if (!document.fullscreenElement) {
       video.requestFullscreen?.();
     } else {
@@ -78,125 +76,170 @@ export default function VideoSection({ t }: VideoSectionProps) {
   };
 
   return (
-    <section className="py-32 bg-gradient-to-b from-white to-[#f8f6f3]">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-20 items-center">
+    <section className="relative min-h-screen w-full overflow-hidden">
+      {/* VIDEO BACKGROUND */}
+      <video
+        key={currentIndex}
+        ref={videoRef}
+        src={`/${t.smartHomeSection.videos[currentIndex].src}`}
+        autoPlay
+        loop
+        muted={muted}
+        playsInline
+        className="
+          absolute inset-0
+          w-full h-full
+          object-cover
+          scale-105
+          transition-all duration-700
+        "
+      />
 
-          {/* TEXT */}
-          <div>
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#003B4A] leading-tight">
+      {/* OVERLAY */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
+
+      {/* CONTENT */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 min-h-screen flex items-center">
+        <div className="grid md:grid-cols-2 gap-16 w-full items-center">
+
+          {/* TEXT GLASS CARD */}
+          <div className="
+            bg-white/10 backdrop-blur-2xl
+            border border-white/20
+            rounded-3xl
+            p-8 md:p-10
+            text-white
+            shadow-2xl
+            max-w-md
+          ">
+            <h2 className="text-3xl md:text-4xl font-bold leading-tight">
               {t.smartHomeSection.title}
             </h2>
 
-            <p className="text-lg text-[#003B4A]/70 mt-6 leading-relaxed max-w-md">
+            <p className="mt-6 text-white/80 leading-relaxed">
               {t.smartHomeSection.description}
             </p>
           </div>
 
-          {/* VIDEO */}
-          <div className="flex justify-center">
-            <div className="relative group w-full max-w-[380px]">
-
-              {/* Glow */}
-              <div className="absolute -inset-2 bg-gradient-to-br from-[#D9C18E]/40 to-transparent rounded-[2rem] blur-xl opacity-60 group-hover:opacity-80 transition" />
-
-              <div className="relative aspect-[9/16] rounded-[2rem] overflow-hidden shadow-2xl">
-
-                <video
-                  key={currentIndex}
-                  ref={videoRef}
-                  src={`/${t.smartHomeSection.videos[currentIndex].src}`}
-                  autoPlay
-                  loop
-                  muted={muted}
-                  playsInline
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-
-                {/* CONTROLS */}
-                <div
-                  dir="ltr"
-                  className="
-                    absolute bottom-4 left-1/2 -translate-x-1/2
-                    bg-black/40 backdrop-blur-lg
-                    rounded-full px-4 py-2
-                    flex items-center gap-4
-                  "
-                >
-                  <button onClick={togglePlay}>
-                    {playing ? (
-                      <Pause size={16} className="text-white" />
-                    ) : (
-                      <Play size={16} className="text-white" />
-                    )}
-                  </button>
-
-                  <button onClick={toggleMute}>
-                    {muted ? (
-                      <VolumeX size={16} className="text-white" />
-                    ) : (
-                      <Volume2 size={16} className="text-white" />
-                    )}
-                  </button>
-
-                  {/* FULLSCREEN */}
-                  <button onClick={toggleFullscreen}>
-                    <Maximize size={16} className="text-white" />
-                  </button>
-                </div>
-
-                {/* PREV */}
-                <button
-                  onClick={prevVideo}
-                  dir="ltr"
-                  className="
-                    absolute left-3 top-1/2 -translate-y-1/2
-                    w-10 h-10 rounded-full bg-white/80 backdrop-blur
-                    flex items-center justify-center
-                    shadow hover:bg-white transition
-                  "
-                >
-                  <ChevronLeft size={22} className="text-[#003B4A]" />
-                </button>
-
-                {/* NEXT */}
-                <button
-                  onClick={nextVideo}
-                  dir="ltr"
-                  className="
-                    absolute right-3 top-1/2 -translate-y-1/2
-                    w-10 h-10 rounded-full bg-white/80 backdrop-blur
-                    flex items-center justify-center
-                    shadow hover:bg-white transition
-                  "
-                >
-                  <ChevronRight size={22} className="text-[#003B4A]" />
-                </button>
-
-              </div>
-
-              {/* DOTS */}
-              <div dir="ltr" className="flex justify-center gap-3 mt-6">
-                {t.smartHomeSection.videos.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      setCurrentIndex(index);
-                      setPlaying(true);
-                    }}
-                    className={`w-2.5 h-2.5 rounded-full transition ${
-                      currentIndex === index
-                        ? "bg-[#D9C18E] shadow-[0_0_10px_#D9C18E]"
-                        : "bg-[#003B4A]/30 hover:bg-[#003B4A]/50"
-                    }`}
-                  />
-                ))}
-              </div>
-
-            </div>
-          </div>
-
+          <div className="hidden md:block" />
         </div>
+      </div>
+
+      {/* LEFT ARROW */}
+      <button
+        onClick={prevVideo}
+        className="
+          absolute left-4 md:left-8
+          top-[65%] md:top-1/2 -translate-y-1/2
+          z-20
+          w-14 h-14
+          rounded-full
+          bg-white/20 backdrop-blur
+          flex items-center justify-center
+          text-white
+          hover:scale-110 transition
+        "
+      >
+        <ChevronLeft size={28} />
+      </button>
+
+      {/* RIGHT ARROW */}
+      <button
+        onClick={nextVideo}
+        className="
+          absolute right-4 md:right-8
+          top-[65%] md:top-1/2 -translate-y-1/2
+          z-20
+          w-14 h-14
+          rounded-full
+          bg-white/20 backdrop-blur
+          flex items-center justify-center
+          text-white
+          hover:scale-110 transition
+        "
+      >
+        <ChevronRight size={28} />
+      </button>
+
+      {/* CONTROLS */}
+      <div
+        className="
+          absolute
+          bottom-6 md:bottom-auto
+          left-1/2 md:left-auto
+          -translate-x-1/2 md:translate-x-0
+          md:right-20
+          md:top-1/2 md:-translate-y-1/2
+          z-20
+          flex flex-row md:flex-col
+          gap-4 md:gap-5
+        "
+      >
+        <button
+          onClick={togglePlay}
+          className="
+            w-11 h-11 md:w-14 md:h-14
+            rounded-full
+            bg-white/20 backdrop-blur
+            flex items-center justify-center
+            text-white
+            hover:scale-110 transition
+          "
+        >
+          {playing ? <Pause size={22} /> : <Play size={22} />}
+        </button>
+
+        <button
+          onClick={toggleMute}
+          className="
+            w-11 h-11 md:w-12 md:h-12
+            rounded-full
+            bg-white/20 backdrop-blur
+            flex items-center justify-center
+            text-white
+            hover:scale-110 transition
+          "
+        >
+          {muted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+        </button>
+
+        <button
+          onClick={toggleFullscreen}
+          className="
+            w-11 h-11 md:w-12 md:h-12
+            rounded-full
+            bg-white/20 backdrop-blur
+            flex items-center justify-center
+            text-white
+            hover:scale-110 transition
+          "
+        >
+          <Maximize size={20} />
+        </button>
+      </div>
+
+      {/* DOTS */}
+      <div className="
+        absolute bottom-20 md:bottom-10
+        left-1/2 -translate-x-1/2
+        z-20
+        flex gap-4
+      ">
+        {t.smartHomeSection.videos.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => {
+              setCurrentIndex(index);
+              setPlaying(true);
+            }}
+            className={`
+              w-3 h-3 rounded-full transition
+              ${currentIndex === index
+                ? "bg-white scale-125 shadow-[0_0_15px_white]"
+                : "bg-white/40 hover:bg-white/70"}
+            `}
+          />
+        ))}
       </div>
     </section>
   );

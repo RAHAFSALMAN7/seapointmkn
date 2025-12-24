@@ -14,10 +14,10 @@ import {
  */
 const videos = [
   // 1️⃣ video_MKN
-  "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765884844/video_MKN_k0ru3i.mp4",
+  "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765885001/SEAPOINTPROJECT_oxzxlr.mp4",
 
   // 2️⃣ SEAPOINTPROJECT
-  "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765885001/SEAPOINTPROJECT_oxzxlr.mp4",
+  "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765884844/video_MKN_k0ru3i.mp4",
 
   // 3️⃣ video
   "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765884954/video_pw2ppx.mp4",
@@ -25,10 +25,10 @@ const videos = [
   // 4️⃣ SEAPOINT
   "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765885043/SEAPOINT_o5euuq.mp4",
 ];
-
+ 
 // فيديو مستقل فوق المعرض
 const featuredVideo =
-  "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765885001/SEAPOINTPROJECT_oxzxlr.mp4";
+  "https://res.cloudinary.com/dl2rqs0lo/video/upload/v1765884844/video_MKN_k0ru3i.mp4";
 
 interface ProjectVideoGalleryProps {
   t: {
