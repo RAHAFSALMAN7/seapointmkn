@@ -1,4 +1,5 @@
 import { ChevronDown, Languages } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 interface HeroProps {
   t: any;
@@ -7,6 +8,30 @@ interface HeroProps {
 }
 
 export default function Hero({ t, language, setLanguage }: HeroProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!videoRef.current) return;
+
+      const heroHeight = window.innerHeight;
+
+      if (window.scrollY > heroHeight * 0.5) {
+        // إذا نزل أكثر من نص الشاشة → أوقف الفيديو
+        videoRef.current.pause();
+      } else {
+        // إذا رجع لفوق → شغّل الفيديو
+        videoRef.current.play().catch(() => {});
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
 
@@ -22,13 +47,13 @@ export default function Hero({ t, language, setLanguage }: HeroProps) {
         />
       </button>
 
-      {/* فيديو الخلفية بدون تظليل */}
+      {/* فيديو الخلفية */}
       <div className="absolute inset-0 pointer-events-none">
         <video
+          ref={videoRef}
           src="/SEAPOINT.mp4"
           autoPlay
           loop
-          muted
           playsInline
           preload="metadata"
           className="w-full h-full object-cover"
@@ -37,7 +62,7 @@ export default function Hero({ t, language, setLanguage }: HeroProps) {
 
       {/* المحتوى */}
       <div className="relative z-10 text-center px-4 w-full pointer-events-auto">
-        <div className="flex justify-center mb-12 animate-fade-in-down">
+        <div className="flex justify-center mb-12">
           <img
             src="/Untitled-2.png"
             alt="Sea Point Logo"
@@ -45,21 +70,13 @@ export default function Hero({ t, language, setLanguage }: HeroProps) {
           />
         </div>
 
-        <div className="animate-fade-in-up-delay">
-          <div className="mb-8">
-            <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#D9C18E] to-transparent mx-auto mb-8" />
-          </div>
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 tracking-tight leading-tight">
+          {t.hero.title}
+        </h1>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 tracking-tight leading-tight">
-            {t.hero.title}
-          </h1>
-
-          <p className="text-xl md:text-3xl text-white/95 max-w-4xl mx-auto mb-12 leading-relaxed font-light">
-            {t.hero.subtitle}
-          </p>
-
-          <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#D9C18E] to-transparent mx-auto" />
-        </div>
+        <p className="text-xl md:text-3xl text-white/95 max-w-4xl mx-auto mb-12 leading-relaxed font-light">
+          {t.hero.subtitle}
+        </p>
       </div>
 
       {/* سهم النزول */}
