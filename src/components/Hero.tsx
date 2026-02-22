@@ -22,7 +22,7 @@ export default function Hero({ t, language, setLanguage }: HeroProps) {
         />
       </button>
 
-      {/* فيديو الخلفية */}
+      {/* فيديو الخلفية بدون تظليل */}
       <div className="absolute inset-0 pointer-events-none">
         <video
           src="/SEAPOINT.mp4"
@@ -33,10 +33,6 @@ export default function Hero({ t, language, setLanguage }: HeroProps) {
           preload="metadata"
           className="w-full h-full object-cover"
         />
-
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#003B4A]/90 via-[#003B4A]/70 to-[#003B4A]/90" />
-        <div className="absolute inset-0 bg-gradient-to-l from-[#D9C18E]/20 to-transparent" />
       </div>
 
       {/* المحتوى */}
@@ -54,7 +50,6 @@ export default function Hero({ t, language, setLanguage }: HeroProps) {
             <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#D9C18E] to-transparent mx-auto mb-8" />
           </div>
 
-          {/* ✅ العنوان بدون أي شرطة */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 tracking-tight leading-tight">
             {t.hero.title}
           </h1>
